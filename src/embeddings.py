@@ -92,7 +92,6 @@ class EmbeddingGenerator:
                 for page_text in tqdm(pages, desc="Generating embeddings"):
                     await self.store_document(page_text)
                     success_count += 1
-                    await self.store_document(page_text)
 
             except Exception as e:
                 print(f"Error: {pdf_file.name}: {str(e)}")

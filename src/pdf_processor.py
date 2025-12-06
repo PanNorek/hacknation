@@ -2,6 +2,7 @@
 Moduł do ekstrakcji tekstu z plików PDF.
 """
 
+import re
 from pathlib import Path
 from pypdf import PdfReader
 from typing import List
@@ -53,7 +54,14 @@ class PDFProcessor:
     def extract_text_from_pdfs_by_page(self, pdf_path: Path) -> List[str]:
         """Page iterator for PDF file."""
         reader = PdfReader(pdf_path)
-        return [page.extract_text() for page in reader.pages]
+        cleaned_pages = []
+
+        for page in reader.pages:
+            raw = page.extract_text() or ""
+            cleaned = re.sub(r"\s+", " ", raw).strip()
+            cleaned_pages.append(cleaned)
+
+        return cleaned_pages
 
     def process_directory(self) -> int:
         """
