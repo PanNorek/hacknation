@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+
 from src.configuration import Configuration
 from src.helpers import load_system_prompt
 
@@ -21,5 +22,5 @@ async def agent_info():
         model=config.google_model_name,
         provider="Google",
         capabilities=["text_generation", "conversation", "problem_solving"],
-        system_prompt=load_system_prompt("src/agents/prompt.md"),
+        system_prompt=load_system_prompt("src/prompts/root.md"),
     ).model_dump(mode="json")

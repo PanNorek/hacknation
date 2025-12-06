@@ -25,7 +25,7 @@ class Output(BaseModel):
     )
 
 
-DEFAULT_MODEL = "gemini-2.5-flash-lite"
+DEFAULT_MODEL = "gemini-2.0-flash"
 
 INTERNET_SEARCHER_NAME = "internet_searcher_agent"
 SUMMARIZER_NAME = "summarizer_agent"
