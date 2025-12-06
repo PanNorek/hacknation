@@ -1,9 +1,10 @@
 from typing import List
 
-from google.adk.agents import Agent
+from google.adk.agents import Agent, SequentialAgent
 from google.adk.tools import agent_tool
 from google.adk.tools.google_search_tool import google_search
 from pydantic import BaseModel, Field
+from src.models.input import CountryInput
 
 
 class Reason(BaseModel):
@@ -25,8 +26,9 @@ class Output(BaseModel):
     )
 
 
-DEFAULT_MODEL = "gemini-2.0-flash"
+DEFAULT_MODEL = "gemini-2.5-flash"
 
+EXTRACTOR_TOOL_NAME = "extractor_tool"
 INTERNET_SEARCHER_NAME = "internet_searcher_agent"
 SUMMARIZER_NAME = "summarizer_agent"
 ROOT_AGENT_NAME = "root_agent"
@@ -49,6 +51,7 @@ def load_system_prompt(file_path: str) -> str:
 internet_searcher = Agent(
     model=DEFAULT_MODEL,
     name=INTERNET_SEARCHER_NAME,
+    input_schema=CountryInput,
     description="An AI agent that can perform internet searches using Google Search to answer user queries.",
     static_instruction=load_system_prompt(PROMPTS[INTERNET_SEARCHER_NAME]),
     tools=[google_search],
@@ -61,15 +64,31 @@ summarizer = Agent(
     static_instruction="You are a summarization agent that provides concise summaries based on the context given to you.",
 )
 
+extractorTool = Agent(
+    output_schema=CountryInput,
+    model=DEFAULT_MODEL,
+    name=EXTRACTOR_TOOL_NAME,
+    description="An AI agent that extracts information about a country from the user's question. You should always start with this tool.",
+    static_instruction="You are a extraction agent that prepares the information for the summarizer agent. If some information is missing you can skipp it",
+)
 
+
+seq_agent = SequentialAgent(
+    name=ROOT_AGENT_NAME,
+    description="An AI agent specialized in predicting future of the country based on the context. You should always start with extractor_tool the information from the user's question.",
+    sub_agents=[
+        extractorTool,
+        internet_searcher,
+        summarizer,
+    ],
+)
 root_agent = Agent(
     model=DEFAULT_MODEL,
     name=ROOT_AGENT_NAME,
-    description="An AI agent specialized in predicting future of the country based on the context.",
+    description="An AI agent specialized in predicting future of the country based on the context. You should always start with extractor_tool the information from the user's question.",
     static_instruction=load_system_prompt(PROMPTS[ROOT_AGENT_NAME]),
     tools=[
-        agent_tool.AgentTool(internet_searcher),
-        agent_tool.AgentTool(summarizer),
+        agent_tool.AgentTool(seq_agent),
     ],
     output_schema=Output,
 )
