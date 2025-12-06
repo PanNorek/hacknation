@@ -3,7 +3,6 @@ import json
 import logging
 from fastapi import APIRouter
 from pydantic import BaseModel
-from src.agents.gemini import ask_gemini
 from src.models.input import CountryInput
 
 logger = logging.getLogger(__name__)
