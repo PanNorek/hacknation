@@ -127,8 +127,8 @@ async def prediction(
             user_id=session.user_id, session_id=session.id, new_message=content
         ):
             if event.is_final_response():
+                print(f"Agent Response: {event.content}")
                 final_response = event.content.parts[0].text
-                print(f"Agent Response: {final_response}")
                 break
 
         return {
@@ -149,44 +149,12 @@ async def prediction(
         }
 
 
-@router.post("/instruction", tags=["agent"])
-async def set_system_instruction(
-    instruction_request: SystemInstructionInput,
-    user_session: UserSessionDep,
-):
-    """Add or update system instruction for the agent."""
-    try:
-        user_id, user_data = user_session
-        session = user_data["session"]
+@router.get("/instruction", tags=["agent"])
+async def instruction(user_session: UserSessionDep):
+    """Return system instructions for all known user sessions."""
+    user_id, _ = user_session
+    instruction = user_sessions[user_id]["system_instruction"]
 
-        # Update the system instruction
-        user_sessions[user_id]["system_instruction"] = instruction_request.instruction
-
-        # Update session state
-        session.state = {
-            **session.state,
-            "system_instruction": instruction_request.instruction,
-            "description": instruction_request.description or "",
-            "updated_at": str(__import__("datetime").datetime.now()),
-        }
-
-        # Note: The actual agent's static_instruction would need to be updated at runtime
-        # This would require modifying the agent instance or creating a new one
-        # For now, we store it in the session state for reference
-
-        return {
-            "success": True,
-            "message": f"System instruction updated for user {user_id}",
-            "user_id": user_id,
-            "session_id": session.id,
-            "system_instruction": instruction_request.instruction,
-        }
-    except Exception as e:
-        print(f"Error updating system instruction: {str(e)}")
-        import traceback
-
-        traceback.print_exc()
-        return {
-            "success": False,
-            "error": str(e),
-        }
+    return {
+        "instruction": instruction,
+    }
