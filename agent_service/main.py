@@ -6,7 +6,10 @@ from google.adk.cli.fast_api import get_fast_api_app
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-session_service_uri = "sqlite:///:memory:"
+# uses Agent Engine URI by default
+# # configure if you want to use a different session service
+session_service_uri = "agentengine://projects/255469709704/locations/europe-west1/reasoningEngines/2589622562296168448"
+
 ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
 SERVE_WEB_INTERFACE = True
 
