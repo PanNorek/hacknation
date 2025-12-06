@@ -8,10 +8,7 @@ Ten plik zawiera klasę DatabaseConfig, która:
 4. Zapewnia bezpieczne zamykanie połączeń
 """
 
-# import psycopg2
-# from psycopg2.extras import RealDictCursor
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from src.configuration import Configuration
 
 
@@ -55,10 +52,10 @@ class DatabaseConfig:
             Exception: Jeśli połączenie się nie powiedzie
         """
         try:
-            dsn = f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
-            engine = create_engine(dsn)
+            dsn = f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+            engine = create_async_engine(dsn, echo=False)
 
-            return sessionmaker(bind=engine)
+            return async_sessionmaker(bind=engine, expire_on_commit=False)
 
         except Exception as e:
             raise Exception(f"❌ Nie udało się połączyć z bazą danych: {str(e)}")

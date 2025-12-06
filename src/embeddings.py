@@ -24,7 +24,7 @@ class EmbeddingGenerator:
         """
         self.model = SentenceTransformer(model_name)
 
-    def generate_embedding(self, text: str) -> np.ndarray:
+    async def generate_embedding(self, text: str) -> np.ndarray:
         """
         Generuje embedding dla tekstu.
 
@@ -36,7 +36,7 @@ class EmbeddingGenerator:
         """
         return self.model.encode(text, convert_to_numpy=True)
 
-    def store_document(self, filename: str, raw_text: str, summary: str):
+    async def store_document(self, filename: str, raw_text: str, summary: str):
         """
         Zapisuje dokument wraz z embeddingiem w PostgreSQL.
 
@@ -47,19 +47,19 @@ class EmbeddingGenerator:
         """
         sessionmaker = db_config.get_sessionmaker()
 
-        with sessionmaker() as sess:
-            embedding = self.generate_embedding(summary)
+        async with sessionmaker() as a_sess:
+            embedding = await self.generate_embedding(summary)
             embedding_list = embedding.tolist()
-            sess.add(
+            a_sess.add(
                 Embedding(
                     content=summary,
                     embedding=embedding_list,
                     meta_data={},
                 )
             )
-            sess.commit()
+            await a_sess.commit()
 
-    def process_documents(
+    async def process_documents(
         self,
         extracted_dir: str = "data/extracted",
         summaries_dir: str = "data/summaries",
@@ -104,10 +104,11 @@ class EmbeddingGenerator:
                 with open(summary_file, "r", encoding="utf-8") as f:
                     summary = f.read()
 
-                self.store_document(pdf_filename, raw_text, summary)
+                await self.store_document(pdf_filename, raw_text, summary)
                 success_count += 1
 
             except Exception as e:
+                raise e
                 print(f"Error: {summary_file.name}: {str(e)}")
 
         print(
