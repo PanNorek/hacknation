@@ -11,4 +11,10 @@ dependencies = [
     "google-generativeai>=0.8.0",
     "pydantic-ai-slim[google]>=1.27.0",
     "python-dotenv>=1.2.1",
+    "pypdf>=4.0.0",
+    "sentence-transformers>=2.2.0",
+    "psycopg2-binary>=2.9.0",
+    "pgvector>=0.2.0",
+    "transformers>=4.30.0",
+    "torch>=2.0.0",
 ]
