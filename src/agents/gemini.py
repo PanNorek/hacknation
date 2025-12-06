@@ -36,7 +36,7 @@ agent = Agent(
 )
 
 
-async def ask_gemini(prompt: str, form: CountryInput) -> Output:
+async def ask_gemini(prompt: str) -> Output:
     """
     Send a prompt to the Gemini agent and get a response.
 
@@ -46,10 +46,8 @@ async def ask_gemini(prompt: str, form: CountryInput) -> Output:
     Returns:
         The agent's response as an Output object
     """
-    user_prompt = f"User prompt: {prompt}\n\nForm: {form.model_dump_json()}"
-
     try:
-        result = await agent.run(user_prompt)
+        result = await agent.run(prompt)
         return result.output
     except Exception as e:
         raise Exception(f"Error: {str(e)}")
