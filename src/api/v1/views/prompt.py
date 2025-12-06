@@ -1,40 +1,152 @@
-from fastapi import APIRouter
+import uuid
+from typing import Annotated, Optional
+
+from fastapi import APIRouter, Depends, Query
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai import types
 from pydantic import BaseModel
-from src.agents.gemini import ask_gemini
+
+from src.agents.agent import root_agent
 from src.models.input import CountryInput
+from src.models.prompts import PromptRequest, SystemInstructionInput
 
 router = APIRouter()
 
+APP_NAME = "root_agent_app"
 
-class PromptRequest(BaseModel):
+session_service = InMemorySessionService()
+runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
+
+# Store user sessions and contexts
+user_sessions = {}
+
+
+class PredictionRequest(BaseModel):
     prompt: str
 
 
+async def get_runner() -> Runner:
+    """FastAPI dependency to get the runner instance."""
+    return runner
+
+
+async def get_user_session(
+    user_id: Annotated[Optional[str], Query(description="User ID")] = None,
+) -> tuple[str, dict]:
+    """FastAPI dependency to get or create user session."""
+    if user_id is None:
+        user_id = f"user_{uuid.uuid4().hex[:8]}"
+
+    if user_id not in user_sessions:
+        # Create a new session for this user
+        session = await session_service.create_session(
+            app_name=APP_NAME,
+            user_id=user_id,
+        )
+        user_sessions[user_id] = {"session": session}
+
+    return user_id, user_sessions[user_id]
+
+
+UserSessionDep = Annotated[tuple[str, dict], Depends(get_user_session)]
+RunnerDep = Annotated[Runner, Depends(get_runner)]
+
+
 @router.post("/prompt", tags=["prompt"])
-async def prompt(prompt: PromptRequest):
+async def prompt(
+    prompt_request: PromptRequest,
+    user_session: UserSessionDep,
+    agent_runner: RunnerDep,
+):
+    """Send a prompt to the root agent and get a response."""
+    try:
+        user_id, user_data = user_session
+        session = user_data["session"]
 
-    country_input = {
-        "country_name": "Atlantis",
-        "geographical_features": "access to the Baltic Sea, several large navigable rivers, limited drinking water resources",
-        "population": "28 million",
-        "climate": "temperate",
-        "economic_strengths": "heavy industry, automotive, food, chemical, ICT, ambitions to play a significant role in renewable energy sources, processing critical raw materials and building supranational AI infrastructure (including big data centers, AI giga factories, quantum computers)",
-        "army_size": "150 thousand professional soldiers",
-        "digitalization_level": "above European average",
-        "currency": "other than euro",
-        "key_bilateral_relations": [
-            "Germany",
-            "France",
-            "Finland",
-            "Ukraine",
-            "USA",
-            "Japan",
-        ],
-        "political_economic_threats": "instability in the EU, disintegration of the EU into 'different speeds' groups in terms of development pace and interest in deeper integration; negative image campaign by several state actors aimed against the Atlantis government or society; disruptions in hydrocarbon fuel supplies from the USA, Scandinavia, Persian Gulf (resulting from potential changes in the internal policies of exporting countries or transport problems, e.g. Houthi attacks on tankers in the Red Sea); exposure to slowdown in ICT sector development due to embargo on advanced processors",
-        "military_threats": "threat of armed attack by one of the neighbors; ongoing hybrid attacks by at least one neighbor for many years, including in the area of critical infrastructure and cyberspace",
-        "development_milestones": "parliamentary democracy for 130 years; periods of economic stagnation in 1930-1950 and 1980-1990; EU and NATO membership since 1997; 25th largest economy in the world by GDP since 2020; budget deficit and public debt around EU average",
-    }
-    prompt_input = f"User prompt: {prompt.prompt}\n\nForm: {str(country_input)}"
+        # Create message content
+        content = types.Content(
+            role="user", parts=[types.Part(text=prompt_request.prompt)]
+        )
 
-    response = await ask_gemini(prompt_input)
-    return response.model_dump(mode="json")
+        # Run the agent and collect response
+        final_response = None
+        async for event in agent_runner.run_async(
+            user_id=session.user_id, session_id=session.id, new_message=content
+        ):
+            if event.is_final_response():
+                final_response = event.content.parts[0].text
+                print(f"Agent Response: {final_response}")
+                break
+
+        return {
+            "response": final_response,
+            "user_id": user_id,
+            "session_id": session.id,
+            "success": True,
+        }
+    except Exception as e:
+        print(f"Error running agent: {str(e)}")
+        import traceback
+
+        traceback.print_exc()
+        return {
+            "response": f"Error: {str(e)}",
+            "success": False,
+            "error": True,
+        }
+
+
+@router.post("/prediction", tags=["prompt"])
+async def prediction(
+    prediction_request: PredictionRequest,
+    user_session: UserSessionDep,
+    agent_runner: RunnerDep,
+):
+    """Send a prompt with country data to the root agent and get a prediction."""
+    try:
+        user_id, user_data = user_session
+        session = user_data["session"]
+
+        # Combine prompt with form data
+        full_prompt = f"{prediction_request.prompt}\n\nCountry Data:\n{prediction_request.form.model_dump_json(indent=2)}"
+
+        content = types.Content(role="user", parts=[types.Part(text=full_prompt)])
+
+        # Run the agent and collect response
+        final_response = None
+        async for event in agent_runner.run_async(
+            user_id=session.user_id, session_id=session.id, new_message=content
+        ):
+            if event.is_final_response():
+                print(f"Agent Response: {event.content}")
+                final_response = event.content.parts[0].text
+                break
+
+        return {
+            "response": final_response,
+            "user_id": user_id,
+            "session_id": session.id,
+            "success": True,
+        }
+    except Exception as e:
+        print(f"Error running agent: {str(e)}")
+        import traceback
+
+        traceback.print_exc()
+        return {
+            "response": f"Error: {str(e)}",
+            "success": False,
+            "error": True,
+        }
+
+
+# @router.get("/instruction", tags=["agent"])
+# async def instruction(user_session: UserSessionDep):
+#     """Return system instructions for all known user sessions."""
+#     user_id, _ = user_session
+#     instruction = user_sessions[user_id]["system_instruction"]
+
+#     return {
+#         "instruction": instruction,
+#     }

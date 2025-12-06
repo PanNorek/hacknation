@@ -1,17 +1,18 @@
-from pydantic import BaseModel
 from typing import List
+
+from pydantic import BaseModel
 
 
 class CountryInput(BaseModel):
-    country_name: str
-    geographical_features: str
-    population: str
-    climate: str
-    economic_strengths: str
-    army_size: str
-    digitalization_level: str
-    currency: str
-    key_bilateral_relations: List[str]
-    political_economic_threats: str
-    military_threats: str
-    development_milestones: str
+    country_name: str | None
+    geographical_features: str | None
+    population: str | None
+    climate: str | None
+    economic_strengths: str | None
+    army_size: str | None
+    digitalization_level: str | None
+    currency: str | None
+    key_bilateral_relations: List[str] | None
+    political_economic_threats: str | None
+    military_threats: str | None
+    development_milestones: str | None

@@ -1,11 +1,12 @@
 import logging
 import sys
-import logfire
-from fastapi import FastAPI
-from src.api.v1.routes import create_routes
-from src.configuration import Configuration
 from pprint import pprint
 
+import logfire
+from fastapi import FastAPI
+
+from src.api.v1.routes import create_routes
+from src.configuration import Configuration
 
 config = Configuration()
 
@@ -64,7 +65,7 @@ def create_app():
 
     app = FastAPI(
         title="HackNation AI Agent API",
-        description="API for interacting with the Gemini AI agent",
+        description="An AI agent API powered by Google GenAI and FastAPI.",
         version="1.0.0",
     )
 
