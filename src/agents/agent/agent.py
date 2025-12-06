@@ -1,6 +1,29 @@
+from typing import List
+
 from google.adk.agents import Agent
 from google.adk.tools import agent_tool
 from google.adk.tools.google_search_tool import google_search
+from pydantic import BaseModel, Field
+
+
+class Reason(BaseModel):
+    title: str
+    description: str
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
+class Output(BaseModel):
+    response: str = Field(description="The response to the user's question")
+    confidence: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="The confidence in the response between 0 and 1",
+    )
+    reasoning: List[Reason] = Field(
+        min_length=2, max_length=4, description="The sources of the response"
+    )
+
 
 DEFAULT_MODEL = "gemini-2.5-flash"
 
@@ -48,4 +71,5 @@ root_agent = Agent(
         agent_tool.AgentTool(internet_searcher),
         agent_tool.AgentTool(summarizer),
     ],
+    output_schema=Output,
 )

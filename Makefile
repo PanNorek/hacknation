@@ -5,4 +5,4 @@ format:
 lint:
 	uvx flake8 .
 run-api:
-	adk web src/agents
+	uv run uvicorn src.api:app --reload --host 0.0.0.0 --port 8000 --log-level info

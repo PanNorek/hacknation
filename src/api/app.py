@@ -5,7 +5,6 @@ from pprint import pprint
 import logfire
 from fastapi import FastAPI
 
-from src.agents.main import app
 from src.api.v1.routes import create_routes
 from src.configuration import Configuration
 
@@ -64,9 +63,11 @@ def create_app():
 
     logger.info("Initializing FastAPI application...")
 
-    app.title = "HackNation Agents API"
-    app.version = "1.0.0"
-    app.description = "Multi-agent AI system for country prediction"
+    app = FastAPI(
+        title="HackNation AI Agent API",
+        description="An AI agent API powered by Google GenAI and FastAPI.",
+        version="1.0.0",
+    )
 
     # Configure logfire for application observability
     try:
