@@ -55,10 +55,25 @@ Zobacz pełną dokumentację w [CONFIG.md](CONFIG.md).
 ## 📊 Funkcje
 
 - **Multi-czynnikowa analiza scenariuszy**: 6 współzależnych czynników globalnych z wagami
-- **Chain of Thought**: Pełna wyjaśnialność procesu analizy
+- **Chain of Thought**: Pełna wyjaśnialność procesu analizy AI
 - **Prognozy 12 i 36-miesięczne**: Pozytywne i negatywne scenariusze
 - **Raporty PDF**: Profesjonalne raporty z analizami
 - **System logowania**: Szczegółowe logi w plikach i konsoli
+- **Web Scraping**: Automatyczne zbieranie danych o krajach z wiarygodnych źródeł
+
+## 🕷️ Zbieranie Danych o Krajach
+
+System umożliwia automatyczne zbieranie danych z oficjalnych źródeł:
+
+```bash
+# Scrape danych dla pojedynczego kraju
+python3 scrape_country_data.py germany
+
+# Scrape wszystkich krajów
+python3 scrape_country_data.py --all
+```
+
+Zobacz [SCRAPER_GUIDE.md](SCRAPER_GUIDE.md) dla szczegółów.
 
 ## 📁 Struktura Projektu
 
