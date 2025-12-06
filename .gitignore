@@ -149,13 +149,11 @@ activemq-data/
 
 # Environments
 .env
-.envrc
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+.env.local
+.env.*.local
+.env
+.env.local
+.env.*.local
 
 # Spyder project settings
 .spyderproject
@@ -230,3 +228,17 @@ __marimo__/
 .terraform.lock.hcl
 
 .DS_Store
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Generated directories
+logs/
+reports/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
