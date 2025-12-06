@@ -10,4 +10,5 @@ dependencies = [
     "pydantic-settings>=2.12.0",
     "google-generativeai>=0.8.0",
     "pydantic-ai-slim[google]>=1.27.0",
+    "python-dotenv>=1.2.1",
 ]

@@ -1,34 +1,43 @@
+import os
+
+from dotenv import load_dotenv
+from google.genai.types import HarmBlockThreshold, HarmCategory
 from pydantic_ai import Agent
-from ..models.output import Output
+from pydantic_ai.models.google import GoogleModel, GoogleModelSettings
+from pydantic_ai.providers.google import GoogleProvider
+
+from src.configuration import Configuration
+from src.helpers import load_system_prompt
+from src.models.output import Output, Reason
+
+load_dotenv()
+
+PROMPT_PATH = "src/agents/prompt.md"
+DEFAULT_MODEL = "gemini-2.0-flash"
+API_KEY_NAME = "GOOGLE_API_KEY"
+API_KEY = os.getenv(API_KEY_NAME)
 
 
+provider = GoogleProvider(api_key=API_KEY)
 
-# Initialize the Gemini model
-# google_gla_provider = GoogleGLAProvider(api_key=Configuration().gemini_api_key)
-# model = GeminiModel(model_name="gemini-1.5-flash", provider=google_gla_provider)
+settings = GoogleModelSettings(
+    temperature=0.2,
+    max_tokens=1024,
+    google_safety_settings=[
+        {
+            "category": HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            "threshold": HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        }
+    ],
+)
 
-# Create the Gemini agent
-gemini_agent = Agent(
+model = GoogleModel(DEFAULT_MODEL, provider=provider, settings=settings)
+
+
+agent = Agent(
     output_type=Output,
-    model="gemini-2.0-flash",
-    system_prompt="""
-    You are a helpful AI assistant powered by Google's Gemini.
-
-    Your capabilities include:
-    - Answering questions accurately and comprehensively
-    - Providing detailed explanations
-    - Helping with problem-solving
-    - Offering creative suggestions
-    - Maintaining helpful and friendly communication
-
-    Always strive to be:
-    - Accurate and truthful
-    - Clear and concise in your responses
-    - Helpful and engaging
-    - Respectful and professional
-
-    If you don't know something, admit it rather than making up information.
-    """,
+    model=model,
+    system_prompt=load_system_prompt(PROMPT_PATH),
 )
 
 
@@ -43,7 +52,7 @@ async def ask_gemini(prompt: str) -> Output:
         The agent's response as an Output object
     """
     try:
-        result = await gemini_agent.run(prompt)
+        result = await agent.run(prompt)
         print(result.output)
         return result.output
     except Exception as e:
@@ -58,8 +67,8 @@ def get_agent_info() -> dict:
         Dictionary with agent information
     """
     return {
-        "model": "gemini-2.0-flash",
+        "model": DEFAULT_MODEL,
         "provider": "Google",
         "capabilities": ["text_generation", "conversation", "problem_solving"],
-        "system_prompt": gemini_agent.system_prompt,
+        "system_prompt": agent.system_prompt,
     }
