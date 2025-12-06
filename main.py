@@ -1,6 +1,6 @@
 import asyncio
 
-from src.agents.gemini import ask_gemini, get_agent_info
+from src.agents.agent.gemini import ask_gemini, get_agent_info
 from src.configuration import Configuration
 from src.models.input import CountryInput
 
