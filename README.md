@@ -38,6 +38,29 @@ python3 test2.py
 
 📖 **Szczegółowy przewodnik**: Zobacz [QUICKSTART.md](QUICKSTART.md) dla zaawansowanych opcji konfiguracji.
 
+## 🤖 Automatyczna Aktualizacja Danych
+
+System automatycznie aktualizuje dane krajów:
+
+- **Harmonogram**: Codziennie o 3:00 UTC
+- **Źródła**: Oficjalne strony rządowe
+- **Technologia**: GitHub Actions + LLM
+
+### Ręczne uruchomienie:
+
+```bash
+# Przez GitHub Web UI
+# Actions → "Update Germany Data" → Run workflow
+
+# Przez GitHub CLI
+gh workflow run "Update Germany Data"
+
+# Aktualizacja wielu krajów
+gh workflow run "Update All Countries Data" -f countries="germany,france"
+```
+
+📖 **Więcej informacji**: [ON_DEMAND_ACTIONS.md](ON_DEMAND_ACTIONS.md) - Kompletny przewodnik
+
 ## ⚙️ Konfiguracja
 
 System używa pliku `.env` do konfiguracji wszystkich parametrów. Zobacz [CONFIG.md](CONFIG.md) dla szczegółowych informacji.
