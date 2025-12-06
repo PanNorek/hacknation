@@ -12,7 +12,7 @@ project_root = os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, project_root)
 
 # Import bases from different modules for merged metadata
-from src.db.hack.base import Base as BaseHack
+from src.db.hack import Base as BaseHack
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

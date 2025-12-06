@@ -1,3 +1,11 @@
-from sqlalchemy.ext.declarative import declarative_base
+from abc import ABCMeta
 
-Base = declarative_base()
+from sqlalchemy.orm import declarative_base, DeclarativeMeta
+
+
+class DeclarativeABCMeta(DeclarativeMeta, ABCMeta):
+    pass
+
+
+class Base(declarative_base(metaclass=DeclarativeABCMeta)):
+    __abstract__ = True

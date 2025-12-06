@@ -23,7 +23,7 @@ RUN cd /tmp \
 
 # Copy Alembic configuration and migrations
 COPY alembic.ini /alembic.ini
-COPY ./migrations /migrations
+COPY src/db/migrations /migrations
 
 
 # Expose PostgreSQL port

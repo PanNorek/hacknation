@@ -13,7 +13,7 @@ class Embedding(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     content = Column(Text, nullable=False)
     embedding = Column(Vector(384), nullable=True)
-    metadata = Column(JSONB, nullable=True)
+    meta_data = Column(JSONB, nullable=True)
     created_at = Column(
         TIMESTAMP(timezone=True), server_default=func.now(), nullable=True
     )
