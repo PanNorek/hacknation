@@ -8,21 +8,20 @@ Ten plik zawiera klasę DatabaseConfig, która:
 4. Zapewnia bezpieczne zamykanie połączeń
 """
 
-import os
-from typing import Optional
+# import psycopg2
+# from psycopg2.extras import RealDictCursor
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from src.configuration import Configuration
 
-import psycopg2
-from dotenv import load_dotenv
-from psycopg2.extras import RealDictCursor
 
-# Ładowanie zmiennych środowiskowych z pliku .env
-load_dotenv()
+config = Configuration()
 
 
 class DatabaseConfig:
     """
     Klasa do zarządzania konfiguracją i połączeniami z PostgreSQL.
-    
+
     Attributes:
         host (str): Adres hosta bazy danych (np. 'localhost')
         port (str): Port bazy danych (domyślnie '5432')
@@ -30,56 +29,44 @@ class DatabaseConfig:
         user (str): Nazwa użytkownika PostgreSQL
         password (str): Hasło użytkownika
     """
-    
+
     def __init__(self):
         """
         Inicjalizacja konfiguracji z zmiennych środowiskowych.
         Jeśli zmienna nie istnieje, używa wartości domyślnej.
         """
-        self.host = os.getenv("POSTGRES_HOST", "localhost")
-        self.port = os.getenv("POSTGRES_PORT", "5432")
-        self.database = os.getenv("POSTGRES_DB", "hacknation")
-        self.user = os.getenv("POSTGRES_USER", "postgres")
-        self.password = os.getenv("POSTGRES_PASSWORD", "")
-    
-    def get_connection(self):
+        self.host = config.db.postgres_host
+        self.port = config.db.postgres_port
+        self.database = config.db.postgres_db
+        self.user = config.db.postgres_user
+        self.password = config.db.postgres_password
+
+    def get_sessionmaker(self):
         """
         Tworzy i zwraca połączenie z bazą danych PostgreSQL.
-        
+
         RealDictCursor sprawia, że wyniki zapytań są zwracane jako słowniki,
         co ułatwia dostęp do kolumn po nazwie (np. row['filename'])
-        
+
         Returns:
             psycopg2.connection: Aktywne połączenie z bazą danych
-            
+
         Raises:
             Exception: Jeśli połączenie się nie powiedzie
         """
         try:
-            # Nawiązanie połączenia
-            conn = psycopg2.connect(
-                host=self.host,
-                port=self.port,
-                database=self.database,
-                user=self.user,
-                password=self.password,
-                cursor_factory=RealDictCursor  # Wyniki jako słowniki
-            )
-            
-            # Włączenie rozszerzenia pgvector (jeśli jeszcze nie istnieje)
-            with conn.cursor() as cursor:
-                cursor.execute("CREATE EXTENSION IF NOT EXISTS vector;")
-            conn.commit()
-            
-            return conn
-            
+            dsn = f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+            engine = create_engine(dsn)
+
+            return sessionmaker(bind=engine)
+
         except Exception as e:
             raise Exception(f"❌ Nie udało się połączyć z bazą danych: {str(e)}")
-    
+
     def close_connection(self, conn):
         """
         Bezpiecznie zamyka połączenie z bazą danych.
-        
+
         Args:
             conn: Połączenie do zamknięcia
         """

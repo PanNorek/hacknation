@@ -1,29 +1,50 @@
 from typing import Optional, List
-
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings
 
 
+class DB(BaseSettings):
+    postgres_host: str = "localhost"
+    postgres_port: int = 5432
+    postgres_db: str = "hacknation"
+    postgres_user: str = "postgres"
+    postgres_password: str = ""
+
+    # Important!
+    model_config = {
+        "env_prefix": "DB_",  # Only load env vars starting with POSTGRES_
+        "extra": "ignore",  # Ignore unrelated env vars like GOOGLE_API_KEY
+        "env_file": ".env",
+        "case_sensitive": False,
+    }
+
+
 class Configuration(BaseSettings):
-    google_api_key: SecretStr = Field(default=None, env="GOOGLE_API_KEY")
-    google_model_name: str = Field(default="gemini-2.0-flash", env="GOOGLE_MODEL_NAME")
-    temperature: float = Field(default=0.7, ge=0.0, le=2.0, env="TEMPERATURE")
-    max_tokens: int = Field(default=1000, gt=0, env="MAX_TOKENS")
-    logfire_token: SecretStr = Field(default=SecretStr(""), env="LOGFIRE_TOKEN")
+    # Gemini / Google API
+    google_api_key: Optional[SecretStr] = Field(default=None)
+    google_model_name: str = "gemini-2.0-flash"
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    max_tokens: int = Field(default=1000, gt=0)
+    logfire_token: SecretStr = SecretStr("")
 
     # Server settings
-    host: str = Field(default="0.0.0.0", env="HOST")
-    port: int = Field(default=8000, env="PORT")
-    debug: bool = Field(default=False, env="DEBUG")
-    reload: bool = Field(default=False, env="RELOAD")
+    host: str = "0.0.0.0"
+    port: int = 8000
+    debug: bool = False
+    reload: bool = False
 
-    # CORS settings
-    cors_origins: List[str] = Field(default=["*"], env="CORS_ORIGINS")
-    cors_allow_credentials: bool = Field(default=True, env="CORS_ALLOW_CREDENTIALS")
-    cors_allow_methods: List[str] = Field(default=["*"], env="CORS_ALLOW_METHODS")
-    cors_allow_headers: List[str] = Field(default=["*"], env="CORS_ALLOW_HEADERS")
+    # CORS
+    cors_origins: List[str] = ["*"]
+    cors_allow_credentials: bool = True
+    cors_allow_methods: List[str] = ["*"]
+    cors_allow_headers: List[str] = ["*"]
 
-    class Config:
-        env_file = ".env"  # Automatically loads .env file from project root
-        env_file_encoding = "utf-8"
-        case_sensitive = False  # Environment variable names are case-insensitive
+    # Nested DB settings — SAFE!
+    db: DB = DB()
+
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "case_sensitive": False,
+        "extra": "ignore",  # ignore unexpected env variables at top level too
+    }
