@@ -1,8 +1,9 @@
 import os
 
 from dotenv import load_dotenv
+from google.genai.types import HarmBlockThreshold, HarmCategory
 from pydantic_ai import Agent
-from pydantic_ai.models.google import GoogleModel
+from pydantic_ai.models.google import GoogleModel, GoogleModelSettings
 from pydantic_ai.providers.google import GoogleProvider
 
 from src.configuration import Configuration
@@ -15,7 +16,21 @@ API_KEY_NAME = "GOOGLE_API_KEY"
 API_KEY = os.getenv(API_KEY_NAME)
 
 provider = GoogleProvider(api_key=API_KEY)
-model = GoogleModel(DEFAULT_MODEL, provider=provider)
+
+settings = GoogleModelSettings(
+    temperature=0.2,
+    max_tokens=1024,
+    google_thinking_config={"thinking_level": "low"},
+    google_safety_settings=[
+        {
+            "category": HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            "threshold": HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        }
+    ],
+)
+
+model = GoogleModel(DEFAULT_MODEL, provider=provider, settings=settings)
+
 
 agent = Agent(
     output_type=Output,
