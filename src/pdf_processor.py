@@ -4,6 +4,7 @@ Moduł do ekstrakcji tekstu z plików PDF.
 
 from pathlib import Path
 from pypdf import PdfReader
+from typing import List
 from tqdm import tqdm
 
 
@@ -48,6 +49,11 @@ class PDFProcessor:
 
         except Exception as e:
             raise Exception(f"Błąd podczas czytania {pdf_path.name}: {str(e)}")
+
+    def extract_text_from_pdfs_by_page(self, pdf_path: Path) -> List[str]:
+        """Page iterator for PDF file."""
+        reader = PdfReader(pdf_path)
+        return [page.extract_text() for page in reader.pages]
 
     def process_directory(self) -> int:
         """

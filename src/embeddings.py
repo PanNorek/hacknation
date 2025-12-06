@@ -2,12 +2,14 @@
 Moduł do generowania embeddingów i zapisu do PostgreSQL z pgvector.
 """
 
+import asyncio
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
 import numpy as np
 from tqdm import tqdm
 from src.db.db_config import db_config
 from src.db.hack.embeddings import Embedding
+from src.pdf_processor import PDFProcessor
 
 
 class EmbeddingGenerator:
@@ -36,23 +38,23 @@ class EmbeddingGenerator:
         """
         return self.model.encode(text, convert_to_numpy=True)
 
-    async def store_document(self, filename: str, raw_text: str, summary: str):
+    async def store_document(self, content: str):
         """
         Zapisuje dokument wraz z embeddingiem w PostgreSQL.
 
         Args:
             filename: Nazwa pliku PDF
-            raw_text: Pełny wyekstraktowany tekst
+            page_text: Tekst z jednej strony PDF
             summary: Wygenerowane streszczenie
         """
         sessionmaker = db_config.get_sessionmaker()
 
         async with sessionmaker() as a_sess:
-            embedding = await self.generate_embedding(summary)
+            embedding = await self.generate_embedding(content)
             embedding_list = embedding.tolist()
             a_sess.add(
                 Embedding(
-                    content=summary,
+                    content=content,
                     embedding=embedding_list,
                     meta_data={},
                 )
@@ -61,8 +63,7 @@ class EmbeddingGenerator:
 
     async def process_documents(
         self,
-        extracted_dir: str = "data/extracted",
-        summaries_dir: str = "data/summaries",
+        pdfs_dir: str = "data/pdfs",
     ):
         """
         Przetwarza wszystkie dokumenty: generuje embeddingi i zapisuje do bazy.
@@ -71,46 +72,29 @@ class EmbeddingGenerator:
             extracted_dir: Folder z pełnymi tekstami
             summaries_dir: Folder ze streszczeniami
         """
-        extracted_path = Path(extracted_dir)
-        summaries_path = Path(summaries_dir)
+        pdfs_path = Path(pdfs_dir)
+        pdf_files = list(pdfs_path.glob("*.pdf"))
 
-        summary_files = list(summaries_path.glob("*_summary.txt"))
-
-        if not summary_files:
-            print(f"No summaries found in {summaries_dir}")
-            print(f"Run: python src/summarizer.py")
+        if not pdf_files:
+            print(f"No PDFs found in {pdfs_dir}")
             return
 
-        print(f"Found {len(summary_files)} summaries to process\n")
+        print(f"Found {len(pdf_files)} PDFs to process\n")
 
         success_count = 0
+        count = 0
 
-        for summary_file in tqdm(summary_files, desc="Generating embeddings"):
+        for pdf_file in pdf_files:
             try:
-                # Original name (without _summary)
-                original_name = summary_file.stem.replace("_summary", "")
-                pdf_filename = f"{original_name}.pdf"
-
-                # Path to full text
-                extracted_file = extracted_path / f"{original_name}.txt"
-
-                if not extracted_file.exists():
-                    print(f"No file found: {extracted_file.name}")
-                    continue
-
-                with open(extracted_file, "r", encoding="utf-8") as f:
-                    raw_text = f.read()
-
-                with open(summary_file, "r", encoding="utf-8") as f:
-                    summary = f.read()
-
-                await self.store_document(pdf_filename, raw_text, summary)
-                success_count += 1
+                pdf_processor = PDFProcessor()
+                pages = pdf_processor.extract_text_from_pdfs_by_page(pdf_file)
+                count += len(pages)
+                for page_text in tqdm(pages, desc="Generating embeddings"):
+                    await self.store_document(page_text)
+                    success_count += 1
+                    await self.store_document(page_text)
 
             except Exception as e:
-                raise e
-                print(f"Error: {summary_file.name}: {str(e)}")
+                print(f"Error: {pdf_file.name}: {str(e)}")
 
-        print(
-            f"\nSuccessfully stored {success_count}/{len(summary_files)} documents to database"
-        )
+        print(f"\nSuccessfully stored {success_count}/{count} documents to database")
