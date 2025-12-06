@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies with uv
         run: |
-          uv sync --frozen
+          uv sync 
 
       - name: Create .env file
         run: |
@@ -72,7 +72,7 @@ jobs:
             echo "============================================"
             
             if [ "$country" == "germany" ]; then
-              python3 src/crawlers/germany_advanced_scraper.py
+              uv run python src/crawlers/germany_advanced_scraper.py
             else
               echo "⚠️ Scraper for $country not implemented yet"
             fi
