@@ -1,0 +1,266 @@
+Pierwszy przykład analizy niskiej jakości (problematyczne fragmenty na czerwono): 
+ 
+A) Streszczenie danych uwzględnionych w analizie (ok. 250 
+słów) 
+Atlantis to państwo średniej wielkości (28 mln mieszkańców), położone nad Morzem 
+Bałtyckim, z rozwiniętą infrastrukturą rzeczną, ale ograniczonymi zasobami wody pitnej. 
+Posiada nowoczesną, wysoce cyfryzowaną gospodarkę opartą na przemyśle ciężkim, 
+motoryzacyjnym, chemicznym, spożywczym i ICT. Władze mają ambicje, by stać się 
+istotnym graczem w OZE, przetwarzaniu surowców krytycznych i rozwoju infrastruktury AI. 
+Kraj należy do UE i NATO od 1997 r., utrzymując stabilną demokrację parlamentarną od 130 
+lat. Relacje strategiczne obejmują Niemcy, Francję, Finlandię, Ukrainę, USA i Japonię. 
+Sytuacja międzynarodowa nakłada na Atlantis równocześnie szanse i zagrożenia. 
+Największym wyzwaniem jest globalny kryzys w sektorze mikroprocesorów (spadek 
+produkcji o 60% u globalnego lidera), który uderza bezpośrednio w ICT, przemysł 
+motoryzacyjny oraz plany rozwinięcia infrastruktury AI. Dodatkowo europejski przemysł 
+motoryzacyjny przeżywa poważne trudności związane z konkurencją tanich aut elektrycznych 
+z Azji, a gospodarka strefy euro doświadcza recesji (-1,5% PKB). 
+Na wschodzie trwa kruchy rozejm, Ukraina rozwija gospodarkę dzięki inwestycjom 
+zbrojeniowym i odbudowie, natomiast Rosja kontroluje dwa kluczowe ukraińskie źródła 
+energii. Wzrost udziału OZE i jednoczesna nadpodaż ropy oraz gazu (po odkryciach w 
+Ameryce Południowej) doprowadzą do spadku cen ropy do 30–35 USD, co wywoła 
+turbulencje budżetowe Rosji i części krajów eksportujących ropę. 
+Analiza przedstawia cztery scenariusze: pozytywny i negatywny w perspektywie 12 miesięcy 
+oraz pozytywny i negatywny w perspektywie 36 miesięcy, a także rekomendacje dla rządu 
+Atlantis pozwalające minimalizować ryzyka i wykorzystywać szanse. 
+ 
+B) Scenariusze rozwoju sytuacji międzynarodowej i ich 
+wpływ na Atlantis 
+ 
+1. Scenariusz NEGATYWNY – 12 miesięcy 
+(2025–2026) 
+Opis scenariusza 
+W krótkim terminie sytuacja międzynarodowa pogarsza się w kilku wymiarach jednocześnie. 
+Kryzys mikroprocesorowy blokuje dostęp do zaawansowanych chipów, hamując rozwój 
+krajowego sektora ICT oraz uniemożliwiając planowane inwestycje w infrastrukturę AI. 
+Europejski przemysł motoryzacyjny doświadcza silnego spadku produkcji, co zmniejsza 
+popyt na komponenty z Atlantis. Recesja w strefie euro obniża eksport o 3–5%. 
+Na granicy wschodniej wzmagają się ataki hybrydowe, powodując kilka poważnych 
+incydentów dotyczących infrastruktury energetycznej i teleinformatycznej. Rosja, mimo 
+niskich cen ropy, utrzymuje presję militarną, korzystając z sytuacji, w której UE jest zajęta 
+kryzysem gospodarczym. 
+Atlantis doświadcza wzmożonej negatywnej kampanii informacyjnej. Wskutek trudności 
+budżetowych w UE ograniczone zostają środki na transformację energetyczną i rozwój 
+projektów AI. Zagrożenia w dostawach paliw węglowodorowych (np. z USA i Skandynawii) 
+powodują wzrost niepewności energetycznej. 
+Korelacje i przyczynowo-skutkowość 
+• Spadek europejskich zysków w motoryzacji (do 30% poziomu z lat 2020–2024) 
+przekłada się na redukcję zamówień na komponenty z Atlantis → uderzenie w sektor 
+przemysłowy. 
+• Globalny kryzys procesorowy + embargo na zaawansowane chipy → spowolnienie 
+rozwoju centrów danych i projektów AI → spadek konkurencyjności w ICT. 
+• Recesja w strefie euro (-1,5% PKB) → spadek popytu na export Atlantis → osłabienie 
+budżetu państwa. 
+• Niestabilność w UE + spadek cen ropy → Rosja szuka rekompensaty politycznej 
+poprzez presję na sąsiadów → wzrost zagrożeń hybrydowych dla Atlantis. 
+ 
+2. Scenariusz POZYTYWNY – 12 miesięcy 
+(2025–2026) 
+Opis scenariusza 
+Pomimo globalnych zawirowań Atlantis skutecznie minimalizuje skutki kryzysu. Rząd 
+negocjuje priorytetowe dostawy procesorów dla sektorów strategicznych i nawiązuje 
+współpracę z Japonią i USA w zakresie technologii półprzewodników. UE, mimo recesji, 
+przeznacza dodatkowe środki na wsparcie transformacji OZE. 
+Atlantis staje się ważnym partnerem w odbudowie Ukrainy dzięki inwestycjom w 
+infrastrukturę i sektor zbrojeniowy. Rozpoczyna się budowa pierwszych elementów 
+ponadnarodowej infrastruktury AI. Taniejąca ropa obniża koszty transportu i produkcji, 
+wzmacniając konkurencyjność eksportową Atlantis. 
+Ataki hybrydowe są kontrowane skuteczniejszą współpracą cyberbezpieczeństwa z Finlandią 
+i USA. Stabilność wewnętrzna oraz wizerunek kraju pozostają nienaruszone. 
+Z komentarzem [A1]: Ogólnik – to zdanie niczego nie 
+wnosi 
+Z komentarzem [A2]: Halucynacja - w danych w punkcie A 
+nie ma informacji o embargu, a wygenerowany materiał nie 
+wskazuje na żadne zewnętrzne źródło informacji, brakuje też 
+wskazania kto i na kogo rzekomo nałożył embargo 
+Z komentarzem [A3]: Zbyt ogólne stwierdzenie; na 
+podstawie dostępnych danych można wskazać bardziej 
+konkretnie, jakie to są formy współpracy 
+Korelacje i przyczynowo-skutkowość 
+• Dywersyfikacja dostaw chipów + partnerstwo z Japonią → utrzymanie tempa rozwoju 
+ICT i AI mimo globalnego kryzysu. 
+• Tanie paliwa → niższe koszty produkcji → przewagi konkurencyjne w eksporcie. 
+• Wzrost inwestycji w Ukrainie i aktywna polityka zagraniczna → tworzenie rynków 
+zbytu dla Atlantis i zacieśnianie relacji politycznych. 
+• Współpraca cyber z Finlandią i USA → neutralizacja części zagrożeń hybrydowych . 
+ 
+3. Scenariusz NEGATYWNY – 36 miesięcy 
+(2025–2028) 
+Opis scenariusza 
+Kryzys procesorowy trwa do końca 2028 r., co hamuje rozwój infrastruktury AI w Atlantis 
+oraz zwiększa zależność od dostawców azjatyckich. Europa w dalszym ciągu nie nadąża w 
+transformacji motoryzacji, a jej rynek zostaje zdominowany przez pojazdy z Azji Wschodniej. 
+Dochodzi do trwałej restrukturyzacji przemysłu europejskiego, w której część produkcji 
+zamyka się lub przenosi poza UE. 
+Atlantis, jako państwo zintegrowane gospodarczo z Niemcami i Francją, ponosi znaczące 
+straty w eksporcie. UE faktycznie rozpada się na „grupy różnych prędkości”: zacieśniający 
+integrację rdzeń i peryferia. Atlantis, utrzymując walutę inną niż euro, zostaje wypchnięty 
+poza kluczowe decyzje strategiczne. 
+Spadek cen ropy wpływa destrukcyjnie na budżet Rosji, co wywołuje agresywniejszą politykę 
+zagraniczną. Wzmacniają się militaryzacja i presja na sąsiadów, w tym Atlantis. Ataki 
+hybrydowe stają się coraz bardziej destrukcyjne; dwa poważne cyberataki skutkują 
+czasowymi przerwami w dostawach energii i usługach ICT. 
+Atlantis zmaga się z niedoborami wody pitnej wskutek zmian klimatycznych i rosnącego 
+obciążenia infrastruktury. Brakuje funduszy na inwestycje w OZE, a kilka dużych projektów 
+zostaje zamkniętych. 
+Korelacje i przyczynowo-skutkowość 
+• Przeciągający się kryzys procesorowy + wolne tempo odbudowy UE → spadek 
+inwestycji w AI i ICT → utrata przewagi technologicznej. 
+• Nadpodaż ropy → zmniejszenie budżetu Rosji → intensyfikacja działań hybrydowych 
+i militarnych. 
+• „Europa różnych prędkości” + brak euro → wykluczenie Atlantis z najważniejszych 
+decyzji, mniejsze fundusze inwestycyjne, słabsza pozycja negocjacyjna. 
+• Problemy infrastruktury wodnej → narastanie napięć społecznych i spowolnienie 
+inwestycji przemysłowych. 
+ 
+Z komentarzem [A4]: Ogólnik pozbawiony wartości 
+Z komentarzem [A5]: Ogólnik pozbawiony wartości 
+Z komentarzem [A6]: Ogólnik – takie rzeczy muszą być 
+rozbite na kilka konkretnych punktów – na czym ta bardziej 
+agresywna polityka polega 
+Z komentarzem [A7]: Wskazanie konkretnej liczby ataków 
+brzmi jak wróżenie z fusów; tego rodzaju predykcja jest 
+bezużyteczną fikcją 
+Z komentarzem [A8]: Brak wyjaśniena jak możliwe jest 
+nasilenie ataków duże koszty) przy mocno malejących 
+wpływach do budżetu Rosji 
+4. Scenariusz POZYTYWNY – 36 miesięcy 
+(2025–2028) 
+Opis scenariusza 
+Atlantis wykorzystuje kryzys procesorowy jako impuls do stworzenia własnych kompetencji 
+w zakresie projektowania średniozaawansowanych chipów, inwestując w konsorcjum 
+technologiczne z Japonią i USA. Powstają dwa nowe centra danych i giga fabryka AI, które 
+czynią Atlantis kluczowym graczem na północnoeuropejskim rynku high-tech. 
+Reforma europejskiego przemysłu motoryzacyjnego daje Atlantis szansę przejęcia części 
+produkcji – zwłaszcza komponentów dla elektryków. Atlantis staje się hubem 
+technologicznym dla północno-wschodniej Europy. 
+Tanie paliwa i większy udział OZE w Europie stabilizują koszty energii, co przyciąga 
+inwestorów. Kraj rozwija własne technologie magazynowania energii i staje się beneficjentem 
+rosnącego rynku OZE. 
+Współpraca z Ukrainą owocuje wspólnymi projektami surowców krytycznych oraz rozwojem 
+infrastruktury kolejowej i portowej. Rosja, osłabiona spadkiem cen ropy, ogranicza działania 
+hybrydowe. 
+Atlantis, umiejętnie rozgrywając relacje między Niemcami, Francją, Finlandią i USA, trafia 
+do „rdzenia integracji europejskiej”, mimo że nie wprowadza euro. 
+Korelacje i przyczynowo-skutkowość 
+• Inwestycje w półprzewodniki → uniezależnienie od kryzysów zewnętrznych → 
+szybszy rozwój AI i ICT. 
+• Stabilne ceny energii + rozwój OZE → napływ inwestycji → wzrost 
+konkurencyjności gospodarki. 
+• Współpraca z Ukrainą → dostęp do surowców krytycznych i nowych rynków. 
+• Osłabienie Rosji → zmniejszenie zagrożeń hybrydowych. 
+ 
+C) Rekomendacje dla państwa Atlantis 
+ 
+1. Jak uniknąć scenariuszy negatywnych? 
+(a) Perspektywa 12 miesięcy 
+1. Zabezpieczenie dostaw procesorów 
+o Negocjacje priorytetowych dostaw z Japonią i USA. 
+Z komentarzem [A9]: Dlaczego tylko północ i północny 
+wschód? Brak racjonalnego wyjaśnienia. 
+Z komentarzem [A10]: Niejasne i analityczno mało 
+przydatne sformułowanie. Może chodzić o projekty w 
+zakresie poszukiwania złóż surowców krytycznych, ich 
+wydobycia, przetwarzania.  
+Z komentarzem [A11]: Dlaczego akurat z tych państw?  
+o Tworzenie strategicznych rezerw chipów dla kluczowych sektorów. 
+2. Ochrona sektorów motoryzacyjnego i przemysłowego 
+o Dopłaty do automatyzacji i cyfryzacji fabryk. 
+o Program wsparcia eksportu do rynków pozaeuropejskich. 
+3. Ochrona cybernetyczna i infrastrukturalna 
+o Utworzenie „Cyber Tarczy Atlantis” przy współpracy z USA i Finlandią. 
+o Audyt infrastruktury wodnej i energetycznej. 
+4. Walka z kampaniami informacyjnymi 
+o Centrum Analiz Dezinformacji + kampanie edukacyjne. 
+ 
+(b) Perspektywa 36 miesięcy 
+1. Uniezależnienie od globalnych kryzysów technologicznych 
+o Rozwój własnych mocy badawczych w zakresie projektowania chipów. 
+o Budowa partnerstw technologicznych z Japonią, USA i Finlandią. 
+2. Zapobieganie marginalizacji w UE 
+o Aktywna dyplomacja, udział w rdzeniowych projektach unijnych (AI, OZE, 
+infrastruktura cyfrowa). 
+o Zwiększenie zdolności wnoszenia kapitału technologicznego do projektów 
+europejskich. 
+3. Wzmocnienie bezpieczeństwa 
+o Rozwój obrony przeciwdronej i cyberwojska. 
+o Modernizacja armii (150 tys. żołnierzy) w oparciu o technologie bezzałogowe. 
+4. Stabilizacja zasobów wody pitnej 
+o Inwestycje w odsalanie wody morskiej i nowoczesne systemy retencji. 
+ 
+2. Jak zrealizować scenariusze pozytywne? 
+(a) Perspektywa 12 miesięcy 
+1. Wejście w projekty odbudowy Ukrainy 
+o Preferencje dla atlantyjskich firm w zamówieniach publicznych Ukrainy. 
+o Budowa wspólnych zakładów zbrojeniowych i infrastrukturalnych. 
+2. Dynamiczny rozwój OZE i infrastruktury AI 
+o Program „Atlantis Green & Digital 2026” – ułatwienia regulacyjne + dopłaty. 
+o Tworzenie stref inwestycyjnych dla big data centers i giga fabryk AI. 
+3. Wzmocnienie współpracy z Niemcami, Francją i Finlandią 
+o Wspólne projekty energetyczne i cyfrowe. 
+ 
+(b) Perspektywa 36 miesięcy 
+1. Zbudowanie przewagi technologicznej 
+o Konsorcjum półprzewodnikowe „Atlantis Semiconductor Initiative”. 
+Z komentarzem [A12]: Motoryzacja to część przemysłu – 
+szkolny błąd 
+Z komentarzem [A13]: Globalnym problemem jest utrata 
+60% mocy produkcyjnych, projektowanie chipów nie 
+rozwiązuje problemu – mogą pozostać same plany na 
+papierze. 
+Z komentarzem [A14]: „przeciwdronej” – nie ma takiego 
+słowa, bezwartościowy ogólnik 
+Z komentarzem [A15]: Nie ma potrzeby wymyślania nazw 
+nieistniejących programów. Narzędzie nie ma wymyślać 
+nazw programów, tylko kojarzyć ze sobą fakty 
+o Rozwój krajowego sektora kwantowego we współpracy z USA i Japonią. 
+2. Ugruntowanie pozycji w rdzeniu integracji europejskiej 
+o Silny wkład w unijną politykę OZE i surowców krytycznych. 
+o Wspólne projekty portowe i kolejowe z Finlandią i Niemcami. 
+3. Transformacja energetyczna i wodna 
+o Program magazynowania energii i systemów inteligentnej dystrybucji. 
+o Zwiększenie efektywności zużycia wody w przemyśle. 
+4. Budowanie potęgi logistycznej 
+o Rozbudowa portów bałtyckich i połączeń rzecznych. 
+o Powstanie „Korytarza Atlantyckiego” łączącego Bałtyk z Ukrainą. 
+ 
+Podsumowanie końcowe 
+Atlantis stoi przed równoczesnymi wyzwaniami: kryzysem półprzewodników, recesją w UE, 
+presją hybrydową, a także niestabilnością w Europie Środkowo-Wschodniej. Jednocześnie 
+państwo ma wyjątkową szansę, aby wykorzystać transformację OZE, rozwój infrastruktury 
+AI oraz odbudowę Ukrainy jako trampolinę do zbudowania swojej pozycji jako regionalnego 
+lidera technologicznego i energetycznego. 
+Kluczem do sukcesu jest: 
+(1) szybka dywersyfikacja dostaw technologicznych, 
+(2) silne partnerstwa międzynarodowe, 
+(3) inwestycje w OZE, AI i surowce krytyczne, 
+(4) modernizacja bezpieczeństwa, 
+(5) aktywna rola w projektach unijnych. 
+Takie działania pozwolą Atlantis skutecznie przejść przez nadchodzące turbulencje i 
+wzmocnić pozycję w Europie na kolejne dekady. 
+ 
+ 
+KOMENTARZ do analizy: 
+Wybrane problemy z powyższą analizą: 
+• Scenariusze zamiast opisywać prawdopodobne wydarzenia (np. dochodzi do coraz 
+poważniejszych cyberataków w efekcie zwiększającej się presji na państwo X, przez co staje się 
+agresywniejsze i rozwija ofensywę ), stał się wymyślonym szkicem powieści fantastyczno -
+naukowej: „dwa poważne cyberataki skutkują czasowymi przerwami w dostawach energii i 
+usługach ICT” – dlaczego akurat dwa? Na jakie podstawie wyciągnięto taki wniosek, że zostaną 
+dokonane dwa ataki? Jest to zdarzenie nieprzewidywalne, przez co scenariusz ma charakter 
+fikcyjny, a nie prawdopodobny.  
+• W analizie nie wykorzystano też bogatych źródeł zewnętrznych z internetu, przetwarza ona 
+jedynie kreatywnie otrzymany prompt. 
+Z komentarzem [A16]: To nie rekomendacja, tylko 
+życzenie. Rekomendacja jest wtedy, gdy czytamy: „By 
+ugruntować swoją pozycję w dalszej integracji europejskiej, 
+Atlantis powinno zrobić X, Y, Z.” 
+Z komentarzem [A17]: W pewnej mierze takim 
+połączeniem jest „Via Baltica” – dociera z Estonii do 
+Warszawy, a stąd już krok do Ukrainy (drogą S17 i S19). 
+Rekomendacja zrobienia / zainicjowania czegoś, co już 
+istnieje jest zbyteczna. 
+Z komentarzem [A18]: Bezwartościowy ogólnik 
+• Brak uzasadnienia proponowanych rozwiązań – np. nie wskazano dlaczego w zakresie 
+dywersyfikacji chipów należy pogłębiać partnerstwo z takim a nie innym państwem, jakie 
+czynniki za tym przemawiają.
