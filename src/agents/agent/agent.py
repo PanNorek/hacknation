@@ -21,7 +21,7 @@ class Output(BaseModel):
         description="The confidence in the response between 0 and 1",
     )
     reasoning: List[Reason] = Field(
-        min_length=2, max_length=4, description="The sources of the response"
+        min_length=2, max_length=6, description="The sources of the response"
     )
 
 
