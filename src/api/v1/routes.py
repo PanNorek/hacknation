@@ -1,7 +1,7 @@
 from fastapi import APIRouter, FastAPI
 
-from src.api.v1.views.health import router as health_router
 from src.api.v1.views.agent_info import router as agent_info_router
+from src.api.v1.views.health import router as health_router
 from src.api.v1.views.prompt import router as prompt_router
 
 
