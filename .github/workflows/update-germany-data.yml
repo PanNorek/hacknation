@@ -44,8 +44,7 @@ jobs:
         run: uv python install 3.13
 
       - name: Install dependencies with uv
-        run: |
-          uv sync --frozen
+        run: uv sync
 
       - name: Create .env file with API key
         run: |
@@ -61,7 +60,7 @@ jobs:
           echo "Force update: $FORCE_UPDATE"
           echo "Delay between requests: $DELAY_SECONDS seconds"
 
-          python3 src/crawlers/germany_advanced_scraper.py
+          uv run python src/crawlers/germany_advanced_scraper.py
 
           echo "✅ Scraper completed successfully"
 
