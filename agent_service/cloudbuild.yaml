@@ -1,0 +1,56 @@
+
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+
+    dir: "services/test_agent_new"
+
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        branch_name=$BRANCH_NAME
+        branch=${branch_name//\//-}
+
+        docker build -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/test_agent_new:latest -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/test_agent_new:$SHORT_SHA -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/test_agent_new:$branch --network=cloudbuild .
+
+
+  - name: 'gcr.io/cloud-builders/docker'
+
+    dir: "services/test_agent_new"
+
+    entrypoint: docker
+    args:
+      - "push"
+      - "-a"
+
+      - "${_ARTIFACT_REGISTRY_CONTAINERS_URL}/test_agent_new"
+
+
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+
+    dir: "services/test_agent_new"
+
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - "test_agent_new"
+  
+      - --image=${_ARTIFACT_REGISTRY_CONTAINERS_URL}/test_agent_new:${SHORT_SHA}
+  
+      - --region=${_REGION}
+      - --project=$PROJECT_ID
+ #     - --allow-unauthenticated
+ #if not specified service agent should have vertex.user role. NOTICE: service agent is not servie account
+ #     - --service-account=SERVICE_ACCOUNT_NAME
+
+
+images:
+
+  - "${_ARTIFACT_REGISTRY_CONTAINERS_URL}/test_agent_new"
+
+
+options:
+  logging: CLOUD_LOGGING_ONLY
