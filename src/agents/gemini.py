@@ -1,8 +1,6 @@
 from pydantic_ai import Agent
-from pydantic_ai.models.gemini import GeminiModel
-from ..configuration import Configuration
-from ..models.output import Output, Reason
-from pydantic_ai.providers.google_gla import GoogleGLAProvider
+from ..models.output import Output
+
 
 
 # Initialize the Gemini model
