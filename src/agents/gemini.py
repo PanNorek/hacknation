@@ -6,6 +6,7 @@ from pydantic_ai.providers.google import GoogleProvider
 from src.configuration import Configuration
 from src.helpers import load_system_prompt
 from src.models.output import Output, Reason
+from src.models.input import CountryInput
 
 # Load configuration
 config = Configuration()
@@ -35,7 +36,7 @@ agent = Agent(
 )
 
 
-async def ask_gemini(prompt: str) -> Output:
+async def ask_gemini(prompt: str, form: CountryInput) -> Output:
     """
     Send a prompt to the Gemini agent and get a response.
 
@@ -45,9 +46,10 @@ async def ask_gemini(prompt: str) -> Output:
     Returns:
         The agent's response as an Output object
     """
+    user_prompt = f"User prompt: {prompt}\n\nForm: {form.model_dump_json()}"
+
     try:
-        result = await agent.run(prompt)
-        print(result.output)
+        result = await agent.run(user_prompt)
         return result.output
     except Exception as e:
         raise Exception(f"Error: {str(e)}")

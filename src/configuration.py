@@ -9,6 +9,7 @@ class Configuration(BaseSettings):
     google_model_name: str = Field(default="gemini-2.0-flash", env="GOOGLE_MODEL_NAME")
     temperature: float = Field(default=0.7, ge=0.0, le=2.0, env="TEMPERATURE")
     max_tokens: int = Field(default=1000, gt=0, env="MAX_TOKENS")
+    logfire_token: SecretStr = Field(default=SecretStr(""), env="LOGFIRE_TOKEN")
 
     # Server settings
     host: str = Field(default="0.0.0.0", env="HOST")

@@ -1,9 +1,11 @@
 import logging
 import sys
+import logfire
 from fastapi import FastAPI
 from src.api.v1.routes import create_routes
 from src.configuration import Configuration
 from pprint import pprint
+
 
 config = Configuration()
 
@@ -65,6 +67,16 @@ def create_app():
         description="API for interacting with the Gemini AI agent",
         version="1.0.0",
     )
+
+    # Configure logfire for application observability
+    try:
+        logfire.configure()
+        logfire.instrument_pydantic_ai()
+        logger.info("✅ Logfire observability enabled")
+    except Exception as e:
+        logger.warning(
+            f"⚠️  Logfire configuration failed: {e}. Continuing without observability."
+        )
 
     # Add startup event
     @app.on_event("startup")
