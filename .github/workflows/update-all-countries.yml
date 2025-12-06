@@ -1,0 +1,123 @@
+name: Update All Countries Data
+
+on:
+  workflow_dispatch: 
+    inputs:
+      countries:
+        description: 'Countries to update (comma-separated, or "all")'
+        required: true
+        default: "germany"
+        type: string
+      force_update:
+        description: "Force full update for all selected countries"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r src/crawlers/requirements.txt
+
+      - name: Create .env file
+        run: |
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > .env
+          echo "GEMINI_MODEL_NAME=gemini-2.0-flash" >> .env
+
+      - name: Parse countries input
+        id: parse_countries
+        run: |
+          INPUT="${{ github.event.inputs.countries }}"
+          if [ "$INPUT" == "all" ]; then
+            COUNTRIES="germany"  # Dodaj więcej gdy będą dostępne scrapers
+          else
+            COUNTRIES="$INPUT"
+          fi
+          echo "countries=$COUNTRIES" >> $GITHUB_OUTPUT
+          echo "📝 Countries to update: $COUNTRIES"
+
+      - name: Run scrapers
+        env:
+          FORCE_UPDATE: ${{ github.event.inputs.force_update }}
+        run: |
+          echo "🚀 Starting multi-country data scraping..."
+
+          IFS=',' read -ra COUNTRY_ARRAY <<< "${{ steps.parse_countries.outputs.countries }}"
+
+          for country in "${COUNTRY_ARRAY[@]}"; do
+            country=$(echo "$country" | xargs)  # Trim whitespace
+            echo ""
+            echo "============================================"
+            echo "🌍 Processing: $country"
+            echo "============================================"
+            
+            if [ "$country" == "germany" ]; then
+              python3 src/crawlers/germany_advanced_scraper.py
+            else
+              echo "⚠️ Scraper for $country not implemented yet"
+            fi
+          done
+
+          echo ""
+          echo "✅ All scrapers completed"
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet resources/; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No changes detected"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "✅ Changes detected:"
+            git diff --name-only resources/
+          fi
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          COUNTRIES="${{ steps.parse_countries.outputs.countries }}"
+          git add resources/
+          git commit -m "Auto-update: Data for $COUNTRIES [$(date +'%Y-%m-%d %H:%M UTC')]"
+          git push
+
+          echo "✅ Changes committed and pushed"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 📊 Multi-Country Scraping Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date**: $(date +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Countries**: ${{ steps.parse_countries.outputs.countries }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Force update**: ${{ github.event.inputs.force_update }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Changes detected**: ${{ steps.check_changes.outputs.changed }}" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📝 Updated files:" >> $GITHUB_STEP_SUMMARY
+            git diff --name-only resources/ | while read file; do
+              echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
+            done
+          fi
