@@ -44,15 +44,8 @@ async def get_user_session(
         session = await session_service.create_session(
             app_name=APP_NAME,
             user_id=user_id,
-            state={
-                "created_at": str(__import__("datetime").datetime.now()),
-                "system_instruction": root_agent.static_instruction,
-            },
         )
-        user_sessions[user_id] = {
-            "session": session,
-            "system_instruction": root_agent.static_instruction,
-        }
+        user_sessions[user_id] = {"session": session}
 
     return user_id, user_sessions[user_id]
 
@@ -149,12 +142,12 @@ async def prediction(
         }
 
 
-@router.get("/instruction", tags=["agent"])
-async def instruction(user_session: UserSessionDep):
-    """Return system instructions for all known user sessions."""
-    user_id, _ = user_session
-    instruction = user_sessions[user_id]["system_instruction"]
+# @router.get("/instruction", tags=["agent"])
+# async def instruction(user_session: UserSessionDep):
+#     """Return system instructions for all known user sessions."""
+#     user_id, _ = user_session
+#     instruction = user_sessions[user_id]["system_instruction"]
 
-    return {
-        "instruction": instruction,
-    }
+#     return {
+#         "instruction": instruction,
+#     }
