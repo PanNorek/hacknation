@@ -1,6 +1,3 @@
-import os
-
-from dotenv import load_dotenv
 from google.genai.types import HarmBlockThreshold, HarmCategory
 from pydantic_ai import Agent
 from pydantic_ai.models.google import GoogleModel, GoogleModelSettings
@@ -10,19 +7,16 @@ from src.configuration import Configuration
 from src.helpers import load_system_prompt
 from src.models.output import Output, Reason
 
-load_dotenv()
+# Load configuration
+config = Configuration()
 
 PROMPT_PATH = "src/agents/prompt.md"
-DEFAULT_MODEL = "gemini-2.0-flash"
-API_KEY_NAME = "GOOGLE_API_KEY"
-API_KEY = os.getenv(API_KEY_NAME)
 
-
-provider = GoogleProvider(api_key=API_KEY)
+provider = GoogleProvider(api_key=config.google_api_key.get_secret_value())
 
 settings = GoogleModelSettings(
-    temperature=0.2,
-    max_tokens=1024,
+    temperature=config.temperature,
+    max_tokens=config.max_tokens,
     google_safety_settings=[
         {
             "category": HarmCategory.HARM_CATEGORY_HATE_SPEECH,
@@ -31,7 +25,7 @@ settings = GoogleModelSettings(
     ],
 )
 
-model = GoogleModel(DEFAULT_MODEL, provider=provider, settings=settings)
+model = GoogleModel(config.google_model_name, provider=provider, settings=settings)
 
 
 agent = Agent(
@@ -67,7 +61,7 @@ def get_agent_info() -> dict:
         Dictionary with agent information
     """
     return {
-        "model": DEFAULT_MODEL,
+        "model": config.google_model_name,
         "provider": "Google",
         "capabilities": ["text_generation", "conversation", "problem_solving"],
         "system_prompt": agent.system_prompt,

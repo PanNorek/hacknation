@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
     "google-cloud-aiplatform[adk,agent-engines]>=1.128.0",
     "pydantic-ai>=1.27.0",
     "pydantic-settings>=2.12.0",
