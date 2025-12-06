@@ -1,18 +1,27 @@
 from pydantic_ai import Agent
-from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.google import GoogleModel
+from pydantic_ai.providers.google import GoogleProvider
+
+...
+import os
+
+from dotenv import load_dotenv
+
 from ..configuration import Configuration
 from ..models.output import Output, Reason
-from pydantic_ai.providers.google_gla import GoogleGLAProvider
 
+load_dotenv()
 
-# Initialize the Gemini model
-# google_gla_provider = GoogleGLAProvider(api_key=Configuration().gemini_api_key)
-# model = GeminiModel(model_name="gemini-1.5-flash", provider=google_gla_provider)
+DEFAULT_MODEL = "gemini-2.0-flash"
+API_KEY_NAME = "GOOGLE_API_KEY"
+API_KEY = os.getenv(API_KEY_NAME)
 
-# Create the Gemini agent
-gemini_agent = Agent(
+provider = GoogleProvider(api_key=API_KEY)
+model = GoogleModel(DEFAULT_MODEL, provider=provider)
+
+agent = Agent(
     output_type=Output,
-    model="gemini-2.0-flash",
+    model=model,
     system_prompt="""
     You are a helpful AI assistant powered by Google's Gemini.
 
@@ -45,7 +54,7 @@ async def ask_gemini(prompt: str) -> Output:
         The agent's response as an Output object
     """
     try:
-        result = await gemini_agent.run(prompt)
+        result = await agent.run(prompt)
         print(result.output)
         return result.output
     except Exception as e:
@@ -63,5 +72,5 @@ def get_agent_info() -> dict:
         "model": "gemini-2.0-flash",
         "provider": "Google",
         "capabilities": ["text_generation", "conversation", "problem_solving"],
-        "system_prompt": gemini_agent.system_prompt,
+        "system_prompt": agent.system_prompt,
     }
