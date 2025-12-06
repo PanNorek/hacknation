@@ -1,14 +1,12 @@
+import os
+
+from dotenv import load_dotenv
 from pydantic_ai import Agent
 from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
 
-...
-import os
-
-from dotenv import load_dotenv
-
-from ..configuration import Configuration
-from ..models.output import Output, Reason
+from src.configuration import Configuration
+from src.models.output import Output, Reason
 
 load_dotenv()
 

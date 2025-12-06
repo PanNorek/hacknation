@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List
 
+
 class CountryInput(BaseModel):
     country_name: str
     geographical_features: str
@@ -14,5 +15,3 @@ class CountryInput(BaseModel):
     political_economic_threats: str
     military_threats: str
     development_milestones: str
-    
-    
