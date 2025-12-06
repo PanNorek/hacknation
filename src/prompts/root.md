@@ -23,7 +23,7 @@ Każda generowana informacja (typ wydarzenia, rekomendacja, scenariusz) musi by�
 * **Zagrożenia Militarne/Hybrydowe:** Atak zbrojny sąsiada, wieloletnie ataki hybrydowe (infrastruktura krytyczna, cyberprzestrzeń).
 * **Ambicje:** OZE, surowce krytyczne, infrastruktura AI.
 
-**Niezmienny konflikt polityczny**
+**Niezmienny kontekst polityczny**
 - Wskutek zaistniałej przed miesiącem katastrofy naturalnej wiodący światowy
 producent procesorów graficznych stracił 60% zdolności produkcyjnych; odbudowa
 mocy produkcyjnych poprzez inwestycje w filie zlokalizowane na obszarach
