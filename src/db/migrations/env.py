@@ -70,8 +70,9 @@ def run_migrations_online() -> None:
     db_url = os.getenv("DATABASE_URL") or config.get_main_option("sqlalchemy.url")
 
     if not db_url:
-        # Default to local Docker PostgreSQL
-        db_url = "postgresql://hack:hack@localhost:5455/hack"
+        # Default to Docker Compose PostgreSQL service
+        db_url = "postgresql://hack:hack@postgres:5432/hack"  # this is for docker-compose.yml
+        # db_url = "postgresql://hack:hack@localhost:5455/hack" # this is for local development, with DB in container
 
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),

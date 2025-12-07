@@ -38,6 +38,102 @@ python3 test2.py
 
 📖 **Szczegółowy przewodnik**: Zobacz [QUICKSTART.md](QUICKSTART.md) dla zaawansowanych opcji konfiguracji.
 
+## 🐳 Docker Compose Setup (Full Stack)
+
+For production deployment or full-stack development, use Docker Compose to run the entire application with PostgreSQL database.
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Environment file (see configuration section below)
+
+### Quick Start with Docker Compose
+
+```bash
+# 1. Create environment file
+cp .env.example .env  # Edit with your API keys
+
+# 2. Start full stack (database + app + migrations + embeddings)
+make up
+
+# Or run in background
+make up-d
+```
+
+This will automatically:
+1. ✅ Start PostgreSQL with pgvector
+2. ✅ Wait for database to be ready
+3. ✅ Run database migrations
+4. ✅ Create embeddings from PDF documents
+5. ✅ Start the FastAPI application on port 8000
+
+### Docker Compose Commands
+
+```bash
+# Start services
+make up              # Foreground mode
+make up-d           # Background mode
+
+# Stop services
+make down           # Stop containers
+make down-v         # Stop and remove volumes
+
+# View logs
+make logs           # All services
+make logs-app       # Application only
+make logs-db        # Database only
+
+# Individual services
+make run-api        # Start only API
+make db-up          # Start only database
+make migrate        # Run migrations
+make create-embeddings  # Create embeddings
+
+# Database access
+make db-shell       # PostgreSQL shell
+
+# Cleanup
+make clean          # Remove containers, volumes, images
+```
+
+### Environment Configuration
+
+Create a `.env` file with the following variables:
+
+```env
+# Database Configuration
+POSTGRES_DB=hacknation
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=hackathon2024
+POSTGRES_PORT=5432
+
+# Google AI Configuration
+GOOGLE_API_KEY=your_google_api_key_here
+GEMINI_MODEL_NAME=gemini-2.5-flash
+GEMINI_TEMPERATURE=0.2
+GEMINI_MAX_TOKENS=4096
+
+# Logging and Observability
+LOGFIRE_TOKEN=your_logfire_token_here
+
+# Application Configuration
+REPORT_DIR=reports
+REPORT_PAGE_SIZE=A4
+MAX_OTHER_COUNTRIES_CONTEXT=5
+```
+
+### Development Mode
+
+The `docker-compose.override.yml` provides development-specific configuration:
+
+- Source code mounting for live reload
+- Development command with reload enabled
+- Exposed database port for direct access
+
+### Production Deployment
+
+For production, remove `docker-compose.override.yml` and use only `docker-compose.yml` for optimized production builds.
+
 ## 🤖 Automatyczna Aktualizacja Danych
 
 System automatycznie aktualizuje dane krajów:
@@ -153,12 +249,19 @@ The project uses PostgreSQL with pgvector extension for vector similarity search
 
 ### Using Docker Compose (Recommended)
 
-```bash
-# Start PostgreSQL with pgvector
-docker-compose up -d
+See the [🐳 Docker Compose Setup](#-docker-compose-setup-full-stack) section above for complete setup instructions.
 
-# Check if database is ready
-docker-compose logs postgres
+For manual database operations:
+
+```bash
+# Start only database
+make db-up
+
+# Check database logs
+make logs-db
+
+# Access database shell
+make db-shell
 
 # Run database tests
 python src/db/test.py
@@ -277,14 +380,25 @@ alembic current
 
 ## Quick Start
 
+### Option 1: Docker Compose (Recommended)
+
+```bash
+# Full stack deployment
+make up
+
+# API available at http://localhost:8000
+```
+
+### Option 2: Local Development
+
 ```bash
 # Install dependencies
 uv sync
 
 # Start database
-docker-compose up -d
+docker-compose up -d postgres
 
-# Run the API
+# Run the API locally
 make run-api
 # or
 uv run uvicorn src.api:app --reload --host 0.0.0.0 --port 8000

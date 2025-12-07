@@ -1,23 +1,58 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
     image: ankane/pgvector:latest
     container_name: hacknation-postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-hacknation}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hackathon2024}
+      POSTGRES_DB: hack
+      POSTGRES_USER: hack
+      POSTGRES_PASSWORD: hack
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "5444:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U hack"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hacknation-app
+    environment:
+      - DB_POSTGRES_HOST=postgres
+      - DB_POSTGRES_PORT=5432
+      - DB_POSTGRES_DB=hack
+      - DB_POSTGRES_USER=hack
+      - DB_POSTGRES_PASSWORD=hack
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - LOGFIRE_TOKEN=${LOGFIRE_TOKEN}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/.venv
+    working_dir: /app
+    command: >
+      sh -c "
+        echo 'Waiting for postgres to be ready...' &&
+        echo 'Running database migrations...' &&
+        uv run alembic upgrade head &&
+        echo 'Creating embeddings...' &&
+        uv run python create_embeddings.py &&
+        echo 'Starting API...' &&
+        uv run uvicorn src.api:app --host 0.0.0.0 --port 8000 --log-level info
+      "
+    restart: unless-stopped
 
 volumes:
   postgres_data:

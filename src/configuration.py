@@ -6,9 +6,9 @@ from pydantic_settings import BaseSettings
 class DB(BaseSettings):
     postgres_host: str = "localhost"
     postgres_port: int = 5432
-    postgres_db: str = "hacknation"
-    postgres_user: str = "postgres"
-    postgres_password: str = ""
+    postgres_db: str = "hack"
+    postgres_user: str = "hack"
+    postgres_password: str = "hack"
 
     # Important!
     model_config = {
