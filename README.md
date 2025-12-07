@@ -38,6 +38,29 @@ python3 test2.py
 
 📖 **Szczegółowy przewodnik**: Zobacz [QUICKSTART.md](QUICKSTART.md) dla zaawansowanych opcji konfiguracji.
 
+## 🤖 Automatyczna Aktualizacja Danych
+
+System automatycznie aktualizuje dane krajów:
+
+- **Harmonogram**: Codziennie o 3:00 UTC
+- **Źródła**: Oficjalne strony rządowe
+- **Technologia**: GitHub Actions + LLM
+
+### Ręczne uruchomienie:
+
+```bash
+# Przez GitHub Web UI
+# Actions → "Update Germany Data" → Run workflow
+
+# Przez GitHub CLI
+gh workflow run "Update Germany Data"
+
+# Aktualizacja wielu krajów
+gh workflow run "Update All Countries Data" -f countries="germany,france"
+```
+
+📖 **Więcej informacji**: [ON_DEMAND_ACTIONS.md](ON_DEMAND_ACTIONS.md) - Kompletny przewodnik
+
 ## ⚙️ Konfiguracja
 
 System używa pliku `.env` do konfiguracji wszystkich parametrów. Zobacz [CONFIG.md](CONFIG.md) dla szczegółowych informacji.
@@ -55,10 +78,25 @@ Zobacz pełną dokumentację w [CONFIG.md](CONFIG.md).
 ## 📊 Funkcje
 
 - **Multi-czynnikowa analiza scenariuszy**: 6 współzależnych czynników globalnych z wagami
-- **Chain of Thought**: Pełna wyjaśnialność procesu analizy
+- **Chain of Thought**: Pełna wyjaśnialność procesu analizy AI
 - **Prognozy 12 i 36-miesięczne**: Pozytywne i negatywne scenariusze
 - **Raporty PDF**: Profesjonalne raporty z analizami
 - **System logowania**: Szczegółowe logi w plikach i konsoli
+- **Web Scraping**: Automatyczne zbieranie danych o krajach z wiarygodnych źródeł
+
+## 🕷️ Zbieranie Danych o Krajach
+
+System umożliwia automatyczne zbieranie danych z oficjalnych źródeł:
+
+```bash
+# Scrape danych dla pojedynczego kraju
+python3 scrape_country_data.py germany
+
+# Scrape wszystkich krajów
+python3 scrape_country_data.py --all
+```
+
+Zobacz [SCRAPER_GUIDE.md](SCRAPER_GUIDE.md) dla szczegółów.
 
 ## 📁 Struktura Projektu
 

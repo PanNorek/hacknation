@@ -20,12 +20,12 @@ class DB(BaseSettings):
 
 
 class Configuration(BaseSettings):
-    # Gemini / Google API
-    google_api_key: Optional[SecretStr] = Field(default=None)
-    google_model_name: str = "gemini-2.0-flash"
-    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
-    max_tokens: int = Field(default=1000, gt=0)
-    logfire_token: SecretStr = SecretStr("")
+    # Legacy fields (optional for backwards compatibility)
+    google_api_key: Optional[SecretStr] = Field(default=None, env="GOOGLE_API_KEY")
+    google_model_name: str = Field(default="gemini-2.0-flash", env="GOOGLE_MODEL_NAME")
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0, env="TEMPERATURE")
+    max_tokens: int = Field(default=1000, gt=0, env="MAX_TOKENS")
+    logfire_token: Optional[SecretStr] = Field(default=None, env="LOGFIRE_TOKEN")
 
     # Server settings
     host: str = "0.0.0.0"

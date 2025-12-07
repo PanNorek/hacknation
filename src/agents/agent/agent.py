@@ -56,13 +56,15 @@ internet_searcher = Agent(
     description="An AI agent that can perform internet searches using Google Search to answer user queries.",
     static_instruction=load_system_prompt(PROMPTS[INTERNET_SEARCHER_NAME]),
     tools=[google_search],
+    output_key="search_results",
 )
 
 summarizer = Agent(
     model=DEFAULT_MODEL,
     name=SUMMARIZER_NAME,
+    output_key="summary",
     description="An AI agent that synthesizes internet search results into actionable insights about threats and opportunities for a country.",
-    static_instruction="""You receive information from internet searches about a specific country. Your task:
+    static_instruction="""You receive information from internet searches about a specific country in {search_results}. Your task:
 
 1. **Analyze** the search results in the context of the country's profile
 2. **Categorize** findings into:
@@ -94,6 +96,7 @@ extractor = Agent(
     static_instruction="""You are a extraction agent that converts raw information provide by user
     into structured data about a country. Extract as much information as possible.
     If some information is missing you can skip it""",
+    output_key="country_data",
 )
 
 final_formatter = Agent(
