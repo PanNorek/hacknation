@@ -1,7 +1,7 @@
 from typing import List
 
 from google.adk.agents import Agent, SequentialAgent
-from google.adk.tools import agent_tool
+from google.adk.tools.agent_tool import AgentTool
 from google.adk.tools.google_search_tool import google_search
 from pydantic import BaseModel, Field
 
@@ -28,11 +28,7 @@ class Output(BaseModel):
     )
 
 
-# DEFAULT_MODEL = "gemini-2.5-flash"
-from google.adk.models.lite_llm import LiteLlm
-
-GEMINI_MODEL = "gemini-2.5-flash"
-LOCAL_MODEL = LiteLlm(model="ollama_chat/ministral-3:8b")
+DEFAULT_MODEL = "gemini-2.5-flash"
 
 EXTRACTOR_TOOL_NAME = "extractor_tool"
 INTERNET_SEARCHER_NAME = "internet_searcher_agent"
@@ -55,7 +51,7 @@ def load_system_prompt(file_path: str) -> str:
 
 
 internet_searcher = Agent(
-    model=GEMINI_MODEL,
+    model=DEFAULT_MODEL,
     name=INTERNET_SEARCHER_NAME,
     input_schema=CountryInput,
     description="An AI agent that can perform internet searches using Google Search to answer user queries.",
@@ -65,11 +61,11 @@ internet_searcher = Agent(
 )
 
 summarizer = Agent(
-    model=LOCAL_MODEL,
+    model=DEFAULT_MODEL,
     name=SUMMARIZER_NAME,
     output_key="summary",
     description="An AI agent that synthesizes internet search results into actionable insights about threats and opportunities for a country.",
-    static_instruction="""You receive information from internet searches about a specific country in {embeddings_searcher}. Your task:
+    static_instruction=""" Your task:
 
 1. **Analyze** the search results in the context of the country's profile
 2. **Categorize** findings into:
@@ -95,47 +91,45 @@ Be specific, actionable, and factual. Focus on geopolitical, economic, and secur
 
 extractor = Agent(
     output_schema=CountryInput,
-    model=LOCAL_MODEL,
+    model=DEFAULT_MODEL,
     name=EXTRACTOR_TOOL_NAME,
     description="An AI agent that extracts information about a country from the user's question.",
     static_instruction="""You are a extraction agent that converts raw information provide by user
     into structured data about a country. Extract as much information as possible.
     If some information is missing you can skip it""",
-    output_key="country_data",
 )
 
 final_formatter = Agent(
     output_schema=Output,
-    model=LOCAL_MODEL,
+    model=DEFAULT_MODEL,
     name="final_formatter",
-    description="An AI agent that formats the final analysis into structured output with confidence and reasoning. Use the following tools to search for information:  {summary}",
+    description="An AI agent that formats the final analysis into structured output with confidence and reasoning",
     static_instruction=load_system_prompt(PROMPTS[ROOT_AGENT_NAME]),
 )
 
 
 embeddings_searcher = Agent(
     output_schema=EmbeddingsSearchOutput,
-    model=LOCAL_MODEL,
+    model=DEFAULT_MODEL,
     name="embeddings_searcher",
     description="An AI agent that searches for information about a country from the embeddings database.",
-    static_instruction="""You are a embeddings searcher agent that searches for information about a country from the embeddings database. Use the following tools to search for information: {country_data}""",
+    static_instruction="""You are a embeddings searcher agent that searches for information about a country from the embeddings database""",
     tools=[embeddings_search],
-    output_key="embeddings_searcher",
 )
 
 
 root_agent = Agent(
     output_schema=Output,
-    model=LOCAL_MODEL,  # Add model parameter
+    model=DEFAULT_MODEL,  # Add model parameter
     name=ROOT_AGENT_NAME,
     description="Sequential pipeline that always processes country analysis in order: extract country data, search for threats/opportunities, summarize findings, and format final output.",
     static_instruction=load_system_prompt(PROMPTS[ROOT_AGENT_NAME]),
     tools=[
-        extractor,
-        internet_searcher,
-        embeddings_searcher,
-        summarizer,
-        final_formatter,
+        AgentTool(extractor),
+        AgentTool(internet_searcher),
+        AgentTool(embeddings_searcher),
+        AgentTool(summarizer),
+        AgentTool(final_formatter),
     ],
 )
 # root_agent = SequentialAgent(
@@ -143,7 +137,7 @@ root_agent = Agent(
 #     description="Sequential pipeline that always processes country analysis in order: extract country data, search for threats/opportunities, summarize findings, and format final output.",
 #     sub_agents=[
 #         extractor,
-#         # internet_searcher,
+#         internet_searcher,
 #         embeddings_searcher,
 #         summarizer,
 #         final_formatter,
