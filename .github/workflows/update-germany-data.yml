@@ -1,0 +1,111 @@
+name: Update Germany Data
+
+on:
+  schedule:
+    # Uruchom codziennie o 3:00 UTC
+    - cron: "0 3 * * *"
+
+  workflow_dispatch: # Pozwala na ręczne uruchomienie z parametrami
+    inputs:
+      force_update:
+        description: "Force full update (ignore existing data)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      commit_message:
+        description: "Custom commit message (optional)"
+        required: false
+        default: "Auto-update: Germany data from government sources"
+      delay_between_requests:
+        description: "Delay between requests (seconds)"
+        required: false
+        default: "2"
+        type: number
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Set up Python with uv
+        run: uv python install 3.13
+
+      - name: Install dependencies with uv
+        run: uv sync
+
+      - name: Create .env file with API key
+        run: |
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > .env
+          echo "GEMINI_MODEL_NAME=${{ secrets.GEMINI_MODEL_NAME }}" >> .env
+
+      - name: Run Germany scraper
+        env:
+          FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
+          DELAY_SECONDS: ${{ github.event.inputs.delay_between_requests || '2' }}
+        run: |
+          echo "🚀 Starting Germany data scraper..."
+          echo "Force update: $FORCE_UPDATE"
+          echo "Delay between requests: $DELAY_SECONDS seconds"
+
+          uv run python src/crawlers/germany_advanced_scraper.py
+
+          echo "✅ Scraper completed successfully"
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet resources/germany.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No changes detected in germany.json"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "✅ Changes detected in germany.json"
+            git diff resources/germany.json
+          fi
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          COMMIT_MSG="${{ github.event.inputs.commit_message }}"
+          if [ -z "$COMMIT_MSG" ]; then
+            COMMIT_MSG="Auto-update: Germany data from government sources [$(date +'%Y-%m-%d %H:%M UTC')]"
+          fi
+
+          git add resources/germany.json
+          git commit -m "$COMMIT_MSG"
+          git push
+
+          echo "✅ Changes committed and pushed successfully"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 📊 Scraping Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date**: $(date +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Changes detected**: ${{ steps.check_changes.outputs.changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Force update**: ${{ github.event.inputs.force_update || 'false' }}" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
+            echo "- **Status**: ✅ Data updated and committed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Status**: ℹ️ No changes - data up to date" >> $GITHUB_STEP_SUMMARY
+          fi
