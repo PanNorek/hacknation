@@ -4,9 +4,13 @@ from google.adk.agents import Agent, SequentialAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.tools.google_search_tool import google_search
 from pydantic import BaseModel, Field
-
+from typing import Union, Optional
 from src.models.input import CountryInput
-from src.agents.tools.embedding_search import embeddings_search, EmbeddingsSearchOutput
+from src.agents.tools.embedding_search import (
+    embeddings_search,
+    embeddings_search_tool,
+    EmbeddingsSearchOutput,
+)
 
 
 class Reason(BaseModel):
@@ -15,13 +19,26 @@ class Reason(BaseModel):
     confidence: float = Field(default=0.0, ge=0.0, le=1.0)
 
 
+class ToolInsight(BaseModel):
+    """Tool usage insight - simplified for Google ADK compatibility."""
+
+    title: str = Field(default="", description="The title of the tool")
+    description: str = Field(default="", description="The description of the tool")
+
+
 class Output(BaseModel):
+    """Output schema - simplified for Google ADK compatibility."""
+
     response: str = Field(description="The response to the user's question")
     confidence: float = Field(
         default=0.0,
         ge=0.0,
         le=1.0,
         description="The confidence in the response between 0 and 1",
+    )
+    tools: ToolInsight = Field(
+        default_factory=ToolInsight,
+        description="The tools used to generate the response",
     )
     reasoning: List[Reason] = Field(
         min_length=2, max_length=6, description="The sources of the response"
@@ -113,8 +130,12 @@ embeddings_searcher = Agent(
     model=DEFAULT_MODEL,
     name="embeddings_searcher",
     description="An AI agent that searches for information about a country from the embeddings database.",
-    static_instruction="""You are a embeddings searcher agent that searches for information about a country from the embeddings database""",
-    tools=[embeddings_search],
+    static_instruction="""You are a embeddings searcher agent that searches for information about a country from the embeddings database.
+
+Your task is to search for relevant information using the embeddings_search tool. Always use the tool to find information - do not respond with natural language apologies or explanations.
+
+When given a query, call the embeddings_search tool with that query and return the structured results.""",
+    tools=[embeddings_search_tool],
 )
 
 
@@ -132,14 +153,3 @@ root_agent = Agent(
         AgentTool(final_formatter),
     ],
 )
-# root_agent = SequentialAgent(
-#     name=ROOT_AGENT_NAME,
-#     description="Sequential pipeline that always processes country analysis in order: extract country data, search for threats/opportunities, summarize findings, and format final output.",
-#     sub_agents=[
-#         extractor,
-#         internet_searcher,
-#         embeddings_searcher,
-#         summarizer,
-#         final_formatter,
-#     ],
-# )

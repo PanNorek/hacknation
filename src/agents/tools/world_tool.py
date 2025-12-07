@@ -1,36 +1,23 @@
-"""
-Main script to run geopolitical forecasting simulation
-Uses WorldModel, CountryAgent, and generates PDF reports
-"""
-
-import logging
 import os
+import logging
 from datetime import datetime
-from src.models.world_model import WorldModel
 from src.report_generator import ForecastReportGenerator
-from src.configuration import Configuration
-
-# Load configuration
-config = Configuration()
-
-# Setup logging from configuration
-log_dir = config.log_dir
-os.makedirs(log_dir, exist_ok=True)
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-log_file = os.path.join(log_dir, f"forecast_{timestamp}.log")
-
-logging.basicConfig(
-    level=getattr(logging, config.log_level.upper()),
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler(log_file, encoding="utf-8"), logging.StreamHandler()],
-)
+from src.models.world_model import WorldModel
+from src.configuration import config
+from google.adk.tools import FunctionTool
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 
 
-def main():
-    """Main function to run the complete simulation pipeline"""
+class WorldReport(BaseModel):
+    report_path: str
 
+
+def get_world_report():
+    """
+    A tool that allows the agent to interact with the world.
+    """
     # Create reports directory from configuration
     reports_dir = config.report_dir
     os.makedirs(reports_dir, exist_ok=True)
@@ -64,5 +51,4 @@ def main():
         logger.error(f"Failed to generate PDF report: {e}", exc_info=True)
 
 
-if __name__ == "__main__":
-    main()
+world_tool = FunctionTool(func=get_world_report)
