@@ -11,7 +11,8 @@ Ten plik zawiera klasę DatabaseConfig, która:
 import asyncpg
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from src.configuration import Configuration
-
+import psycopg2
+from psycopg2 import pool
 
 config = Configuration()
 
@@ -39,13 +40,24 @@ class DatabaseConfig:
         self.user = config.db.postgres_user
         self.password = config.db.postgres_password
 
-    async def get_pool(self):
-        return await asyncpg.create_pool(
+    def get_connection(self):
+        """Get a synchronous database connection."""
+        return psycopg2.connect(
             host=self.host,
             port=self.port,
             user=self.user,
             password=self.password,
-            database=self.database,
+            dbname=self.database,
+        )
+
+    def get_pool(self):
+        """Get a synchronous connection pool."""
+        # For simple synchronous usage, just return a connection
+        # For more advanced pooling, could use psycopg2.pool
+        return pool.SimpleConnectionPool(
+            minconn=1,
+            maxconn=10,
+            dsn=f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}",
         )
 
     def get_sessionmaker(self):

@@ -12,8 +12,8 @@ async def main():
     # await generator.process_documents()
 
     store = EmbeddingStore()
-    await store.init()
-    results = await store.search("Polska")
+    store.init()
+    results = store.search("Polska")
     print("\n\n".join(str(result) for result in results))
 
 

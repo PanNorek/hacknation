@@ -12,6 +12,7 @@ from tqdm import tqdm
 from src.db.db_config import db_config
 from src.db.hack.embeddings import Embedding
 from src.pdf_processor import PDFProcessor
+from psycopg2 import extras
 
 
 class EmbeddingGenerator:
@@ -28,7 +29,7 @@ class EmbeddingGenerator:
         """
         self.model = SentenceTransformer(model_name)
 
-    async def generate_embedding(self, text: str) -> np.ndarray:
+    def generate_embedding(self, text: str) -> np.ndarray:
         """
         Generuje embedding dla tekstu.
 
@@ -52,7 +53,7 @@ class EmbeddingGenerator:
         sessionmaker = db_config.get_sessionmaker()
 
         async with sessionmaker() as a_sess:
-            embedding = await self.generate_embedding(content)
+            embedding = self.generate_embedding(content)
             embedding_list = embedding.tolist()
             a_sess.add(
                 Embedding(
@@ -108,20 +109,20 @@ from src.db.db_config import db_config
 class EmbeddingStore:
     def __init__(self):
         self.config = Configuration()
-        self.pool = None  # asyncpg pool
+        self.pool = self.init()  # asyncpg pool
 
-    async def init(self):
+    def init(self):
         """Initialize asyncpg pool once."""
-        self.pool = await db_config.get_pool()
+        self.pool = db_config.get_pool()
 
-    async def search(self, query: str, top_k: int = 3) -> List[Dict]:
+    def search(self, query: str, top_k: int = 3) -> List[Dict]:
         if self.pool is None:
-            raise RuntimeError("Call await store.init() before using search()")
+            raise RuntimeError("Call store.init() before using search()")
 
         generator = EmbeddingGenerator()
 
         # 1) Generate vector
-        query_embedding = await generator.generate_embedding(query)
+        query_embedding = generator.generate_embedding(query)
         query_embedding = query_embedding.tolist()
 
         # 2) Convert to pgvector format
@@ -133,13 +134,18 @@ class EmbeddingStore:
             content,
             meta_data,
             created_at,
-            1 - (embedding <#> $1) AS similarity
+            1 - (embedding <#> %s) AS similarity
         FROM embeddings
-        ORDER BY embedding <#> $1
-        LIMIT $2;
+        ORDER BY embedding <#> %s
+        LIMIT %s;
         """
 
-        async with self.pool.acquire() as conn:
-            rows = await conn.fetch(sql, vector_str, top_k)
+        conn = self.pool.getconn()
+        try:
+            cursor = conn.cursor(cursor_factory=extras.RealDictCursor)
+            cursor.execute(sql, (vector_str, vector_str, top_k))
+            rows = cursor.fetchall()
+        finally:
+            self.pool.putconn(conn)
 
         return [dict(r) for r in rows]
