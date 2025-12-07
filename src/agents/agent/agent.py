@@ -1,9 +1,24 @@
 from typing import List
 
-from google.adk.agents import Agent
+from google.adk.agents import Agent, SequentialAgent
 from google.adk.tools import agent_tool
 from google.adk.tools.google_search_tool import google_search
 from pydantic import BaseModel, Field
+
+
+class CountryInput(BaseModel):
+    country_name: str | None
+    geographical_features: str | None
+    population: str | None
+    climate: str | None
+    economic_strengths: str | None
+    army_size: str | None
+    digitalization_level: str | None
+    currency: str | None
+    key_bilateral_relations: List[str] | None
+    political_economic_threats: str | None
+    military_threats: str | None
+    development_milestones: str | None
 
 
 class Reason(BaseModel):
@@ -25,8 +40,9 @@ class Output(BaseModel):
     )
 
 
-DEFAULT_MODEL = "gemini-2.5-flash-lite"
+DEFAULT_MODEL = "gemini-2.5-flash"
 
+EXTRACTOR_TOOL_NAME = "extractor_tool"
 INTERNET_SEARCHER_NAME = "internet_searcher_agent"
 SUMMARIZER_NAME = "summarizer_agent"
 ROOT_AGENT_NAME = "root_agent"
@@ -49,27 +65,68 @@ def load_system_prompt(file_path: str) -> str:
 internet_searcher = Agent(
     model=DEFAULT_MODEL,
     name=INTERNET_SEARCHER_NAME,
+    input_schema=CountryInput,
     description="An AI agent that can perform internet searches using Google Search to answer user queries.",
     static_instruction=load_system_prompt(PROMPTS[INTERNET_SEARCHER_NAME]),
     tools=[google_search],
+    output_key="search_results",
 )
 
 summarizer = Agent(
     model=DEFAULT_MODEL,
     name=SUMMARIZER_NAME,
-    description="An AI agent that summarizes information about a country's future based on provided context.",
-    static_instruction="You are a summarization agent that provides concise summaries based on the context given to you.",
+    output_key="summary",
+    description="An AI agent that synthesizes internet search results into actionable insights about threats and opportunities for a country.",
+    static_instruction="""You receive information from internet searches about a specific country in {search_results}. Your task:
+
+1. **Analyze** the search results in the context of the country's profile
+2. **Categorize** findings into:
+   - **Threats**: Risks to security, economy, stability, or international position
+   - **Opportunities**: Potential advantages for growth, partnerships, or strategic gains
+3. **Output Format**:
+   - Use clear bullet points
+   - Each point should be concise (1-2 sentences)
+   - Include timeframe when relevant (recent, ongoing, upcoming)
+   - Prioritize by impact level (high/medium/low)
+
+**Structure your response:**
+## Threats
+- [High Impact] Threat description with context
+- [Medium Impact] Threat description with context
+
+## Opportunities
+- [High Impact] Opportunity description with context
+- [Medium Impact] Opportunity description with context
+
+Be specific, actionable, and factual. Focus on geopolitical, economic, and security implications.""",
 )
 
-
-root_agent = Agent(
+extractor = Agent(
+    output_schema=CountryInput,
     model=DEFAULT_MODEL,
-    name=ROOT_AGENT_NAME,
-    description="An AI agent specialized in predicting future of the country based on the context.",
-    static_instruction=load_system_prompt(PROMPTS[ROOT_AGENT_NAME]),
-    tools=[
-        agent_tool.AgentTool(internet_searcher),
-        agent_tool.AgentTool(summarizer),
-    ],
+    name=EXTRACTOR_TOOL_NAME,
+    description="An AI agent that extracts information about a country from the user's question.",
+    static_instruction="""You are a extraction agent that converts raw information provide by user
+    into structured data about a country. Extract as much information as possible.
+    If some information is missing you can skip it""",
+    output_key="country_data",
+)
+
+final_formatter = Agent(
     output_schema=Output,
+    model=DEFAULT_MODEL,
+    name="final_formatter",
+    description="An AI agent that formats the final analysis into structured output with confidence and reasoning.",
+    static_instruction=load_system_prompt(PROMPTS[ROOT_AGENT_NAME]),
+)
+
+root_agent = SequentialAgent(
+    name=ROOT_AGENT_NAME,
+    description="Sequential pipeline that always processes country analysis in order: extract country data, search for threats/opportunities, summarize findings, and format final output.",
+    sub_agents=[
+        extractor,
+        internet_searcher,
+        summarizer,
+        final_formatter,
+    ],
 )
