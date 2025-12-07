@@ -69,15 +69,16 @@ def create_app():
         version="1.0.0",
     )
 
-    # Configure logfire for application observability
-    try:
-        logfire.configure()
-        logfire.instrument_pydantic_ai()
-        logger.info("✅ Logfire observability enabled")
-    except Exception as e:
-        logger.warning(
-            f"⚠️  Logfire configuration failed: {e}. Continuing without observability."
-        )
+    # Configure logfire for application observability (disabled to avoid tracing issues)
+    # try:
+    #     logfire.configure()
+    #     logfire.instrument_pydantic_ai()
+    #     logger.info("✅ Logfire observability enabled")
+    # except Exception as e:
+    #     logger.warning(
+    #         f"⚠️  Logfire configuration failed: {e}. Continuing without observability."
+    #     )
+    logger.info("📝 Logfire tracing disabled to avoid authentication issues")
 
     # Add startup event
     @app.on_event("startup")

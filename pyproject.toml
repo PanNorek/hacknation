@@ -10,7 +10,6 @@ dependencies = [
     "pydantic-ai>=1.27.0",
     "pydantic-ai-slim[google]>=1.27.0",
     "google-generativeai>=0.8.0",
-    
     # Configuration & validation
     "pydantic>=2.10.0",
     "pydantic-settings>=2.12.0",
@@ -32,15 +31,13 @@ dependencies = [
     # "pgvector>=0.2.0",
     "asyncpg>=0.31.0",
     "greenlet>=3.3.0",
-    
     # Simulation framework
     "mesa>=3.0.0",
-    
     # Web scraping
     "requests>=2.31.0",
     "beautifulsoup4>=4.12.0",
     "lxml>=4.9.0",
-    
     # PDF generation
     "reportlab>=4.0.0",
+    "litellm>=1.80.7",
 ]
