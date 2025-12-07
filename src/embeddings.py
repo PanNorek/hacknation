@@ -3,6 +3,8 @@ Moduł do generowania embeddingów i zapisu do PostgreSQL z pgvector.
 """
 
 import asyncio
+import asyncpg
+from typing import List, Dict
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
 import numpy as np
@@ -97,3 +99,47 @@ class EmbeddingGenerator:
                 print(f"Error: {pdf_file.name}: {str(e)}")
 
         print(f"\nSuccessfully stored {success_count}/{count} documents to database")
+
+
+from src.configuration import Configuration
+from src.db.db_config import db_config
+
+
+class EmbeddingStore:
+    def __init__(self):
+        self.config = Configuration()
+        self.pool = None  # asyncpg pool
+
+    async def init(self):
+        """Initialize asyncpg pool once."""
+        self.pool = await db_config.get_pool()
+
+    async def search(self, query: str, top_k: int = 3) -> List[Dict]:
+        if self.pool is None:
+            raise RuntimeError("Call await store.init() before using search()")
+
+        generator = EmbeddingGenerator()
+
+        # 1) Generate vector
+        query_embedding = await generator.generate_embedding(query)
+        query_embedding = query_embedding.tolist()
+
+        # 2) Convert to pgvector format
+        vector_str = "[" + ",".join(str(v) for v in query_embedding) + "]"
+
+        sql = """
+        SELECT 
+            id,
+            content,
+            meta_data,
+            created_at,
+            1 - (embedding <#> $1) AS similarity
+        FROM embeddings
+        ORDER BY embedding <#> $1
+        LIMIT $2;
+        """
+
+        async with self.pool.acquire() as conn:
+            rows = await conn.fetch(sql, vector_str, top_k)
+
+        return [dict(r) for r in rows]

@@ -8,6 +8,7 @@ Ten plik zawiera klasę DatabaseConfig, która:
 4. Zapewnia bezpieczne zamykanie połączeń
 """
 
+import asyncpg
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from src.configuration import Configuration
 
@@ -37,6 +38,15 @@ class DatabaseConfig:
         self.database = config.db.postgres_db
         self.user = config.db.postgres_user
         self.password = config.db.postgres_password
+
+    async def get_pool(self):
+        return await asyncpg.create_pool(
+            host=self.host,
+            port=self.port,
+            user=self.user,
+            password=self.password,
+            database=self.database,
+        )
 
     def get_sessionmaker(self):
         """

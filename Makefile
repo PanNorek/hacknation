@@ -11,5 +11,6 @@ db-up:
 migrate:
 	uv run alembic upgrade head
 
-embeddings:
-	uv run python scripts/embedding_job.py
+create-embeddings:
+	uv run python create_embeddings.py
+
