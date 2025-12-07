@@ -24,7 +24,6 @@ user_sessions = {}
 
 class PredictionRequest(BaseModel):
     prompt: str
-    form: CountryInput
 
 
 async def get_runner() -> Runner:

@@ -1,0 +1,164 @@
+Drugi przykład analizy niskiej jakości (problematyczne fragmenty na czerwono): 
+ 
+a) Streszczenie danych uwzględnionych w analizie 
+Państwo Atlantis znajduje się nad Morzem Bałtyckim, jest krajem umiarkowanego klimatu z 
+populacją 28 milionów. Dysponuje dostępem do kilku żeglownych rzek, ale ma ograniczone zasoby 
+wody pitnej. Jego gospodarka jest zdywersyfikowana, z silnymi sektorami przemysłu ciężkiego, 
+motoryzacyjnego, spożywczego, chemicznego, a także ICT. Atlantis ambitnie rozwija technologie 
+związane z odnawialnymi źródłami energii (OZE), przetwarzaniem surowców krytycznych oraz 
+budową ponadnarodowej infrastruktury AI, w tym centrów danych i komputerów kwantowych. 
+Demokratyczne państwo parlamentarne działa w ramach UE i NATO od 1997 roku. Jego gospodarka 
+jest 25. na świecie pod względem PKB, z deficytem i długiem publicznym na poziomie średniej 
+unijnej. Społeczeństwo cechuje się wysokim poziomem cyfryzacji. 
+Aktualnie Atlantis stoi w obliczu kilku istotnych wyzwań. Po pierwsze, branża ICT cierpi z powodu 
+embarga na wysoko zaawansowane procesory, które razem z efektami katastrofy u głównego 
+producenta GPU ogranicza dostępność kluczowych komponentów technologicznych do 2028 roku. 
+Sektor motoryzacyjny zwleka z transformacją na samochody elektryczne, konkurując z tańszymi 
+producentami azjatyckimi. 
+Na arenie politycznej i gospodarczej istnieje ryzyko destabilizacji w UE oraz rosnących podziałów 
+integracyjnych. W regionie utrzymuje się niestabilny rozejm na wschodzie Ukrainy, gdzie Rosja 
+kontroluje częściowe zasoby energetyczne, a ukraińska gospodarka rozwija się głównie dzięki 
+inwestycjom UE i USA, zwłaszcza w przemysł zbrojeniowy. 
+Globalne rynki energetyczne doświadczają gwałtownego wzrostu udziału OZE oraz nadpodaży ropy i 
+gazu, co obniża ceny ropy do 30-35 USD za baryłkę. Ten trend wywiera presję na państwa 
+produkujące paliwa węglowodorowe, w tym Rosję. 
+Atlantis jest też narażone na zagrożenia militarne i hybrydowe, ze strony co najmniej jednego 
+sąsiada, który od lat prowadzi ataki na infrastrukturę krytyczną i cyberprzestrzeń. 
+ 
+b) Scenariusze rozwoju sytuacji 
+Scenariusz 1: Pozytywny krótko- i średnioterminowy 
+W wariancie pozytywnym odbudowa produkcji procesorów i kart graficznych postępuje zgodnie z 
+planem i do końca 2028 roku niespełna 60% utraconej zdolności produkcyjnej zostaje odzyskane. To 
+znacząco odciąża sektor ICT w Atlantis, przywracając dostęp do zaawansowanych komponentów. 
+Równolegle przemyślana, szybka restrukturyzacja przemysłu motoryzacyjnego pozwala na 
+dynamiczne zwiększenie produkcji samochodów elektrycznych i hybrydowych, co umożliwia 
+odzyskanie fragmentu europejskiego rynku zdominowanego dotąd przez tanie modele z Azji. 
+Strategiczne partnerstwa handlowe z Niemcami, Francją i Finlandią ułatwiają dostosowanie zakładów 
+produkcyjnych do nowych wymagań. 
+Politycznie, mimo istniejących napięć, UE utrzymuje względną spójność, cofając tendencje do 
+podziałów na „różne prędkości”. Atlantis aktywnie uczestniczy w inicjatywach na rzecz zacieśnienia 
+Z komentarzem [A1]: Odciąża? A czym był przeciążony, 
+skoro brakowało procesorów? Brak logiki w rozumowaniu. 
+współpracy, uzyskując korzyści gospodarcze i polityczne. Silna współpraca z USA i Japonią zapewnia 
+dodatkowy impuls technologiczny i dostęp do surowców krytycznych. 
+Na froncie bezpieczeństwa cyberprzestrzeni i infrastruktury krytycznej zostają wdrożone 
+zaawansowane mechanizmy obronne oparte na AI, które pomagają neutralizować ataki hybrydowe. 
+To zwiększa stabilność wewnętrzną i zaufanie społeczne. 
+Równocześnie globalny wzrost udziału OZE w miksie energetycznym, a także nadpodaż paliw 
+kopalnych, prowadzą do obniżenia cen ropy, co ułatwia transformację energetyczną, ogranicza presję 
+budżetową wynikającą z importu paliw i sprzyja rozwojowi lokalnych źródeł odnawialnych. 
+Korelacje i wnioski: Odbudowa produkcji procesorów jest kluczowa dla sektora ICT oraz motoryzacji, 
+co jest fundamentem nowoczesnej gospodarki. Stabilność polityczna w UE pozwala na efektywną 
+wymianę handlową i inwestycyjną, wzmacniając konkurencyjność Atlantis. Cyberbezpieczeństwo 
+redukuje ryzyko destabilizacji wewnętrznej. Korzystny rynek energetyczny stymuluje inwestycje w 
+OZE, podnosząc odporność ekonomiczną państwa. 
+ 
+Scenariusz 2: Negatywny krótko- i średnioterminowy 
+W wariancie negatywnym katastrofa naturalna i związane z nią ograniczenia w produkcji chipów 
+utrzymują się przez cały okres do 2028 roku, znacznie hamując rozwój branży ICT i powodując 
+poważne problemy dostaw w sektorze motoryzacji. Opóźnienia technologiczne i produkcyjne 
+ograniczają zdolność Atlantis do konkurowania z tanimi producentami z Azji, prowadząc do 
+relatywnego spadku przemysłowego znaczenia państwa. 
+Spowolnienie gospodarcze w strefie euro oraz rosnące napięcia polityczne powodują eskalację 
+podziałów między państwami członkowskimi UE, co skutkuje izolacją polityczną i utrudnia dostęp do 
+unijnych funduszy oraz wsparcia inwestycyjnego. 
+Brak efektywnych działań przeciwdziałających cyberzagrożeniom i atakom hybrydowym prowadzi do 
+poważnych wycieków danych, uszkodzeń infrastruktury oraz spadku zaufania społeczeństwa i 
+inwestorów. 
+Na wschodzie Ukrainy konflikt eskaluje, a Rosja zwiększa presję militarną i ekonomiczną na kraje 
+regionu, w tym Atlantis. Groźba konfliktu zbrojnego narasta, co wymusza zwiększenie wydatków na 
+obronę kosztem innych obszarów rozwoju. 
+Ponadto, spadek cen ropy poniżej poziomu rentowności różnych producentów destabilizuje rynki 
+surowcowe, prowadząc do niestabilności w krajach sąsiadujących i trudności w handlu surowcami. 
+Korelacje i wnioski: Utrzymujące się niedobory procesorów prowadzą do stagnacji technologicznej i 
+upadku konkurencyjności sektora przemysłowego. Polityczna rozpadłość UE i ograniczona 
+współpraca międzynarodowa osłabia dostęp do wsparcia i inwestycji, zwiększając podatność 
+wewnętrzną na ataki hybrydowe. Wzrost zagrożeń militarnych z sąsiedztwa w połączeniu z kryzysem 
+energetycznym i surowcowym w regionie wywołują poważne presje na stabilność oraz budżet 
+państwa. 
+ 
+c) Rekomendacje dla państwa Atlantis 
+1. Unikanie scenariuszy negatywnych (12 i 36 miesięcy) 
+Z komentarzem [A2]: USA intensywnie działają na rzecz 
+gromadzenia jak największych ilości surowców krytycznych, 
+ale ze względu na własne interesy, a nie interesy krajów 
+trzecich. Słabo wykorzystane i przeanalizowane informacje z 
+internetu. 
+Z komentarzem [A3]: Odwrócenie porządku logicznego: 
+to nie globalny wzrost udziału OZE w miksie energetycznym 
+sprzyja rozwojowi lokalnych źródeł odnawialnych, ale 
+odwrotnie: wykorzystywanie lokalnych odnawialnych źródeł 
+energii (jeśli dokonuje się na szeroką skalę) z czasem 
+przekłada się na globalny wzrost udziału OZE w miksie 
+energetycznym. 
+Z komentarzem [A4]: Znowu odwrócenie logiczne: to 
+inwestycje w OZE skutkują korzystną sytuacją na rynku 
+energii.  
+Z komentarzem [A5]: Czyja izolacja polityczna – Atlantis 
+czy całej Unii? Takie niejasne określenia i zdania obniżają 
+wartość analizy. 
+Z komentarzem [A6]: Tak silny spadek musi negatywnie 
+wpływać na budżet Rosji - skąd więc ma środki na eskalację 
+wojny w Ukrainie? Te informacje są ze sobą 
+niekompatybilne. Jeśli mimo wszystko taka sytuacja by 
+zaistniała, wygenerowany tekst nie wskazuje na przyczyny tej 
+(pozornej) sprzeczności. Jeśli fakty (pozornie) sprzeczne ze 
+sobą mimo wszystko mają miejsce, narzędzie powinno 
+wyjaśnić, dlaczego tak się dzieje. 
+Z komentarzem [A7]: Takie słowo nie istnieje 
+• Dywersyfikacja dostaw i produkcji procesorów: Warto oprzeć się o strategiczne partnerstwa 
+poza tradycyjnym kręgiem UE i USA, rozwijając współpracę z Azją Południowo-Wschodnią i 
+innymi regionami, by zminimalizować ryzyko ciągłych zakłóceń. 
+• Przyspieszenie transformacji motoryzacyjnej: Wsparcie innowacji w elektromobilności, 
+dotacje i ulgi dla przemysłu samochodowego oraz rozwój krajowych technologii baterii i 
+komponentów zredukują zależność od importu i pozwolą odzyskać rynki. 
+• Wzmocnienie cyberbezpieczeństwa: Budowa zaawansowanych systemów obrony opartych 
+na sztucznej inteligencji i rozbudowa zespołów reakcji kryzysowej zwiększy odporność na 
+hybrydowe zagrożenia. 
+• Aktywna polityka w UE i NATO: Działania na rzecz zachowania jedności UE i integracji w 
+ramach NATO z naciskiem na wspólne inicjatywy bezpieczeństwa, inwestycji i wsparcia 
+technologicznego zabezpieczą pozycję polityczną Atlantis. 
+• Zabezpieczenie rezerw strategicznych: Tworzenie buforów paliwowych i surowcowych 
+pozwoli przeciwdziałać ewentualnym przerwom w dostawach na świecie. 
+2. Wykorzystanie scenariuszy pozytywnych (12 i 36 miesięcy) 
+• Inwestycje w OZE i AI: Kontynuować i zwiększać inwestycje w zielone technologie oraz 
+infrastrukturę big data i AI, aby stać się atrakcyjnym centrum innowacji na poziomie 
+europejskim.  
+• Wsparcie innowacji i współpracy naukowej: Ułatwiać powstawanie konsorcjów badawczo-
+rozwojowych wraz z kluczowymi partnerami zagranicznymi, by wykorzystać efemeryczne 
+możliwości odbudowy branży chipowej. 
+• Digitalizacja społeczeństwa: Rozwijać programy podnoszenia kompetencji cyfrowych, aby 
+szersze warstwy społeczeństwa mogły korzystać z nowych technologii i zwiększać 
+produktywność. 
+• Zacieśnianie relacji handlowych i militarnych: Wykorzystać obecność inwestycji 
+amerykańskich w regionie i relacje dwustronne, by wzmocnić bezpieczeństwo i otworzyć 
+dodatkowe ścieżki rozwoju gospodarczego. 
+• Strategiczne zarządzanie cenami energii: Korzystać z niskich cen ropy i rosnącej podaży OZE 
+do tworzenia stabilnego, niskoemisyjnego miksu energetycznego, który zmniejszy wrażliwość 
+na wahania globalnych cen. 
+ 
+ 
+KOMENTARZ do analizy: 
+Wybrane problemy z powyższą analizą: 
+• Dążenie do zwięzłości kosztem jasności i zrozumiałości oraz błędy językowe „Sektor 
+motoryzacyjny zwleka z transformacją na samochody elektryczne, konkurując z tańszymi 
+producentami azjatyckimi” – nie jest jasne co produkują producenci azjatyccy – czy 
+samochody elektryczne, do których produkcji sektor motoryzacyjny ma dopiero być 
+przystosowany, czy, ponieważ jeszcze nie został przystosowany, konkurencja dotyczy obecnie 
+produkowanych samochodów spalinowych. Ponadto sformułowanie „transformacja na coś” 
+Z komentarzem [A8]: W jaki sposób to ma się dokonać, 
+skoro utrzymuje się niedobór procesorów – bez procesorów 
+nie ma infrastruktury dla AI, chyba że upowszechniają się 
+komputery kwantowe i osiągnięta zosta je ich 
+kompatybilność z wymogami AI – ale tego wygenerowany 
+tekst nie mówi.  
+Z komentarzem [A9]: Znowu – jak ma się to stać bez 
+dostatecznej podaży procesorów? 
+jest niepoprawne. Właściwe sformułowanie to „transformacja czegoś”. Inne niepoprawne 
+sformułowanie „ryzyko destabilizacji w UE oraz rosnących podziałów integracyjnych” – co 
+znaczą podziały integracyjny? Jest to sformułowanie nienaturalne i mało zrozumiałe, w 
+przeciwieństwie do np. „podziałów na państwa o różnych wizjach dalszej integracji” etc.  
+• Połączono i pomieszano scenariusze na 12 i 36 miesięcy, przez co nie jest jasne które uwagi 
+dotyczą której perspektywy. 
+• Sprzeczność między utrzymującym się niedoborem procesorów a rekomendacjami w 
+kierunku coraz szerszego wykorzystywania AI.

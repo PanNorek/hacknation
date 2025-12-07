@@ -1,24 +1,11 @@
 from typing import List
 
 from google.adk.agents import Agent, SequentialAgent
-from google.adk.tools import agent_tool
 from google.adk.tools.google_search_tool import google_search
 from pydantic import BaseModel, Field
 
-
-class CountryInput(BaseModel):
-    country_name: str | None
-    geographical_features: str | None
-    population: str | None
-    climate: str | None
-    economic_strengths: str | None
-    army_size: str | None
-    digitalization_level: str | None
-    currency: str | None
-    key_bilateral_relations: List[str] | None
-    political_economic_threats: str | None
-    military_threats: str | None
-    development_milestones: str | None
+from src.models.input import CountryInput
+from src.agents.tools.embedding_search import embeddings_search, EmbeddingsSearchOutput
 
 
 class Reason(BaseModel):
@@ -120,12 +107,24 @@ final_formatter = Agent(
     static_instruction=load_system_prompt(PROMPTS[ROOT_AGENT_NAME]),
 )
 
+
+embeddings_searcher = Agent(
+    output_schema=EmbeddingsSearchOutput,
+    model=DEFAULT_MODEL,
+    name="embeddings_searcher",
+    description="An AI agent that searches for information about a country from the embeddings database.",
+    static_instruction="""You are a embeddings searcher agent that searches for information about a country from the embeddings database.""",
+    tools=[embeddings_search],  # Tool is properly decorated with @agent_tool
+)
+
+
 root_agent = SequentialAgent(
     name=ROOT_AGENT_NAME,
     description="Sequential pipeline that always processes country analysis in order: extract country data, search for threats/opportunities, summarize findings, and format final output.",
     sub_agents=[
         extractor,
         internet_searcher,
+        embeddings_searcher,
         summarizer,
         final_formatter,
     ],

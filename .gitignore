@@ -242,3 +242,20 @@ reports/
 # Temporary files
 *.tmp
 *.temp
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Generated directories
+logs/
+reports/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+
+src/agents/instructions/*

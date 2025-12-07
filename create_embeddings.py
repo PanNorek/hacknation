@@ -7,14 +7,9 @@ config = Configuration()
 
 async def main():
     """Main function to run the embedding generation job."""
-    # print(config)
-    # generator = EmbeddingGenerator()
-    # await generator.process_documents()
-
-    store = EmbeddingStore()
-    store.init()
-    results = store.search("Polska")
-    print("\n\n".join(str(result) for result in results))
+    print(config)
+    generator = EmbeddingGenerator()
+    await generator.process_documents()
 
 
 if __name__ == "__main__":
